@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>АгроТермінал</title>
+<meta name="description" content="Анонімна онлайн-діагностика цифрової компетентності майбутніх механізаторів">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Макет: світла "агрономічна" сторінка - поле (фон з борознами), біла картка-етап, термінал як прилад у кабіні */
+:root{
+  --leaf:#23A019; --leaf-d:#17700F; --leaf-dd:#163A12; --sprout:#E8F6E4; --wheat:#F4C95D; --wheat-d:#B9861C;
+  --soil:#7A5A3A; --sky:#F6FAF3; --paper:#FFFFFF; --ink:#16241A; --muted:#5B6B5E; --line:#DDE8D8; --bad:#C2412D;
+  --term:#12201A; --term2:#1B2D24; --term-line:#2C4436; --term-fg:#E3EFE6; --amber:#F4C95D;
+  --h:"Unbounded","Golos Text",Arial,sans-serif; --b:"Golos Text","Segoe UI",Arial,sans-serif; --m:"JetBrains Mono",Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--sky)}
+body{margin:0;font-family:var(--b);font-size:16px;line-height:1.55;color:var(--ink);
+  background:
+   radial-gradient(1200px 500px at 85% -10%, #E3F4DC 0%, transparent 60%),
+   radial-gradient(900px 400px at -10% 110%, #FBF0CF 0%, transparent 60%),
+   var(--sky);
+  min-height:100vh;padding:24px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{width:58px;height:auto}
+.brand b{font-family:var(--h);font-size:22px;font-weight:700;letter-spacing:-.3px;display:block;line-height:1.1}
+.brand b span{color:var(--leaf)}
+.brand small{color:var(--muted);font-size:13px}
+.anon{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--leaf-d);background:var(--sprout);border:1px solid #CBE8C3;border-radius:999px;padding:6px 12px;font-weight:500}
+.progress{height:8px;background:#E7EFE3;border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--leaf),#7BCB4F);border-radius:99px;transition:width .5s ease}
+.steplbl{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:8px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 1px 0 #E9F0E5,0 20px 40px -28px rgba(22,58,18,.35);display:flex;flex-direction:column;gap:18px}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center}
+.hero h1{font-family:var(--h);font-size:34px;line-height:1.12;margin:0;letter-spacing:-.6px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--leaf)}
+.hero p{margin:0;color:var(--muted);max-width:56ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;padding:6px 12px;border-radius:999px;background:#F7F3E6;color:#6B5418;border:1px solid #EFE3BE}
+.field-art{width:100%;max-width:280px;justify-self:center}
+h2{font-family:var(--h);font-size:24px;margin:0;letter-spacing:-.3px;text-wrap:balance}
+.eyebrow{font-size:13px;font-weight:600;color:var(--leaf-d);margin:0}
+.lead{color:var(--muted);margin:0;max-width:64ch}
+label.lbl{font-weight:600;font-size:14px}
+input[type=text],select{font:inherit;color:var(--ink);background:#FAFCF8;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible,.opt:focus-within,a:focus-visible{outline:3px solid #9AD98A;outline-offset:2px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.hint{font-size:13px;color:var(--muted)}
+.err{color:var(--bad);font-size:14px;min-height:1.2em;margin:0}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:600;border-radius:14px;padding:13px 22px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
+button:hover{transform:translateY(-1px)}
+button.go{background:var(--leaf);border-color:var(--leaf);color:#fff;box-shadow:0 8px 18px -10px rgba(35,160,25,.8)}
+button.go:hover{background:var(--leaf-d)}
+.q{display:flex;flex-direction:column;gap:10px;padding:16px 0;border-top:1px solid #EEF3EB}
+.q:first-of-type{border-top:0;padding-top:4px}
+.qt{font-weight:600}
+.qn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--sprout);color:var(--leaf-d);font-size:13px;margin-right:8px;font-weight:700;vertical-align:1px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.opts.scale{grid-template-columns:repeat(4,1fr)}
+.opts.lik{grid-template-columns:repeat(5,1fr)}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:11px 13px;cursor:pointer;background:#FCFDFB;font-size:15px;transition:border-color .15s,background .15s}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #B8CBB1;margin-top:2px}
+.opt.cb .dot{border-radius:5px}
+.opt:has(input:checked){border-color:var(--leaf);background:var(--sprout)}
+.opt:has(input:checked) .dot{border-color:var(--leaf);background:radial-gradient(circle,var(--leaf) 45%,transparent 50%)}
+.opt.cb:has(input:checked) .dot{background:var(--leaf)}
+.opts.scale .opt,.opts.lik .opt{flex-direction:column;align-items:center;text-align:center;font-size:12.5px;padding:10px 6px;gap:6px}
+.opts.lik .opt b{font-family:var(--h);font-size:18px;color:var(--leaf-d)}
+/* термінал */
+.cab{background:linear-gradient(180deg,#E9EFE6,#DCE5D8);border-radius:26px;padding:14px;box-shadow:inset 0 0 0 1px #CFDACB}
+.screen{background:var(--term);color:var(--term-fg);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:inset 0 0 0 1px #000,0 18px 30px -20px rgba(0,0,0,.6)}
+.sbar{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;font-family:var(--m);font-size:12px;color:#9DB5A6;border-bottom:1px solid var(--term-line);padding-bottom:10px}
+.sbar b{color:var(--amber)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs span{font-family:var(--m);font-size:12px;padding:4px 9px;border-radius:7px;border:1px solid var(--term-line);color:#9DB5A6}
+.tabs span.on{border-color:var(--amber);color:var(--amber)}
+.tabs span.ok{border-color:#3E7A4C;color:#A6E0AE}
+.screen h3{font-family:var(--h);font-size:18px;margin:0;color:#fff;font-weight:600}
+.task{background:var(--term2);border:1px solid var(--term-line);border-radius:12px;padding:14px 16px;font-size:15px}
+.task b{color:var(--amber)}
+.screen label.lbl{color:var(--term-fg)}
+.screen input[type=text],.screen select{background:#0C1611;border-color:var(--term-line);color:#fff;font-family:var(--m)}
+.screen .opt{background:#0C1611;border-color:var(--term-line);color:var(--term-fg)}
+.screen .opt .dot{border-color:#5E7A68}
+.screen .opt:has(input:checked){border-color:var(--amber);background:#1F2A17}
+.screen .opt:has(input:checked) .dot{border-color:var(--amber);background:radial-gradient(circle,var(--amber) 45%,transparent 50%)}
+.screen .opt.cb:has(input:checked) .dot{background:var(--amber)}
+.screen .hint{color:#9DB5A6}
+.screen .err{color:#FF9B85}
+.screen button{background:#0C1611;color:var(--term-fg);border-color:var(--term-line)}
+.screen button.go{background:var(--amber);color:#2A1E04;border-color:var(--amber);box-shadow:none}
+.alarm{display:flex;gap:12px;align-items:center;background:#3B1E10;border:1px solid #8F431E;color:#FFDCC8;border-radius:12px;padding:12px 14px;font-family:var(--m);font-size:14px}
+.alarm i{font-style:normal;background:var(--amber);color:#2A1E04;font-weight:700;border-radius:6px;padding:2px 9px}
+.man{border:1px solid var(--term-line);border-radius:12px;overflow:auto}
+.man table{width:100%;border-collapse:collapse;font-size:13px}
+.man td,.man th{padding:8px 10px;border-top:1px solid var(--term-line);text-align:left;vertical-align:top}
+.man th{border-top:0;color:#9DB5A6;font-weight:500}
+.man td:first-child{font-family:var(--m);color:var(--amber);white-space:nowrap}
+canvas#fld{width:100%;height:auto;aspect-ratio:16/10;border-radius:12px;display:block;cursor:crosshair;touch-action:manipulation}
+.msg{display:grid;grid-template-columns:auto 1fr;gap:10px;background:#0C1611;border:1px solid var(--term-line);border-radius:12px;padding:11px 13px;cursor:pointer}
+.msg:has(input:checked){border-color:var(--amber);background:#1F2A17}
+.msg input{margin-top:5px;accent-color:var(--amber);width:16px;height:16px}
+.msg .from{font-weight:600;color:#fff;font-size:14px}
+.msg .body{font-size:14px}
+/* результат */
+.res{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+.ring{width:170px;height:170px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font-family:var(--h);font-size:40px;line-height:1}
+.ring small{color:var(--muted)}
+.lv{display:inline-block;font-weight:700;border-radius:999px;padding:6px 14px;font-size:14px}
+.lv1{background:#FCE6E1;color:#9A2E1C}.lv2{background:#FBF1D6;color:#7A5A0E}.lv3{background:var(--sprout);color:var(--leaf-d)}.lv4{background:var(--leaf);color:#fff}
+.bars{display:flex;flex-direction:column;gap:11px}
+.br{display:grid;grid-template-columns:130px 1fr 58px;gap:10px;align-items:center;font-size:14px}
+.tr{height:12px;background:#EEF3EB;border-radius:99px;overflow:hidden}
+.tr i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),#8AD15C);border-radius:99px}
+.num{font-family:var(--m);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.saved{display:flex;gap:12px;align-items:center;background:var(--sprout);border:1px solid #CBE8C3;border-radius:14px;padding:14px 16px}
+.saved.warn{background:#FBF1D6;border-color:#EFDDA6}
+.idbox{font-family:var(--m);font-weight:700;font-size:20px;letter-spacing:1px;color:var(--leaf-d)}
+.code{font-family:var(--m);font-size:12px;word-break:break-all;background:#FAFCF8;border:1.5px dashed var(--line);border-radius:12px;padding:12px;user-select:all}
+/* викладач */
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+.tbl td:first-child,.tbl th:first-child{text-align:left}
+.tbl th{background:#F5F9F2}
+.verdict{border-left:5px solid var(--leaf);background:var(--sprout);padding:10px 14px;border-radius:0 12px 12px 0}
+.verdict.no{border-color:var(--wheat-d);background:#FBF1D6}
+textarea{font:13px var(--m);width:100%;min-height:120px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:#FAFCF8}
+.chart svg{width:100%;height:auto}
+footer{text-align:center;color:var(--muted);font-size:13px}
+footer a{color:var(--leaf-d)}
+@media (max-width:640px){.hero{grid-template-columns:1fr}.field-art{display:none}.card{padding:20px;border-radius:18px}.hero h1{font-size:26px}.opts.scale,.opts.lik{grid-template-columns:repeat(2,1fr)}.opts.lik .opt:last-child{grid-column:span 2}.res{grid-template-columns:1fr;justify-items:center}.br{grid-template-columns:100px 1fr 52px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><img src="logo.png" alt="Логотип АгроТермінал"><div><b>Агро<span>Термінал</span></b><small>діагностика цифрової компетентності</small></div></div>
+    <span class="anon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Анонімно: без імені та прізвища</span>
+  </header>
+  <div id="prog" hidden><div class="progress"><i id="bar"></i></div><div class="steplbl"><span id="slbl"></span><span id="scount"></span></div></div>
+  <main id="app"></main>
+  <footer>Розроблено для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · <a href="#teacher">Панель викладача</a></footer>
+</div>
+<script>
+"use strict";
+/* ======= НАЛАШТУВАННЯ ======= */
+// Адреса веб-застосунку Google Apps Script (див. README). Порожньо - відповіді не надсилаються, студент отримує код.
+const ENDPOINT = "";
+/* ============================ */
+
+const AREAS=[
+ "Знайти в інтернеті інструкцію або відео, як усунути несправність техніки",
+ "Надіслати агроному фото, геолокацію і короткий звіт у робочий чат",
+ "Скласти просту таблицю для обліку чи розрахунку на телефоні або комп’ютері",
+ "Розпізнати шахрайське повідомлення і захистити свій акаунт",
+ "Самостійно розібратися з новим застосунком чи меню техніки"
+];
+const SC=["Ще ні","З підказкою","Сам","Навчу інших"];
+const MOT=[
+ ["Уміння працювати з електронікою техніки знадобляться мені на роботі",0],
+ ["Мені цікаво, як трактор сам їде рівно по GPS",0],
+ ["Я готовий вчитися новим програмам, якщо цього вимагатиме робота",0],
+ ["Механізатору достатньо вміти керувати трактором, а цифрові штуки - зайве",1],
+ ["Я дбаю, щоб мої паролі ніхто не дізнався",0],
+ ["Я хотів би працювати на сучасній техніці з автопілотом",0],
+ ["Заняття з комп’ютером чи смартфоном мені подобаються більше за звичайні",0],
+ ["У робочих чатах треба писати коротко, ввічливо і по суті",0],
+ ["Цифрові технології в господарствах - це далеке майбутнє, мені це не потрібно",1],
+ ["Я дивлюся відео чи читаю про нову агротехніку в інтернеті",0]
+];
+const LIK=["Ні","Скоріше ні","Не знаю","Скоріше так","Так"];
+const QUIZ=[
+ ["На панелі трактора засвітився незнайомий значок. Що найкраще зробити?",["Не звертати уваги","Знайти значення в інструкції або на сайті виробника","Одразу вимкнути двигун і піти","Спитати в коментарях у соцмережах"],1],
+ ["Навіщо трактору GPS-навігація?",["Щоб слухати радіо","Щоб їхати рівно і без пропусків між проходами","Щоб економити оливу","Щоб рахувати зарплату"],1],
+ ["Увімкнено автопілот. Що робить механізатор?",["Спить, техніка все зробить сама","Стежить за роботою і готовий взяти кермо","Виходить з кабіни","Грає в телефоні"],1],
+ ["Яке повідомлення найімовірніше шахрайське?",["«Поле №7 починаємо о 14:00»","«Терміново! Перейдіть за посиланням і введіть пароль, інакше акаунт заблокують»","«Надішли фото лічильника мотогодин»","«Завтра техогляд о 8:00»"],1],
+ ["Який пароль найнадійніший?",["123456","Своє ім’я","Дата народження","Pshenytsia!Pole7-2026"],3],
+ ["Для чого найчастіше використовують дрон над полем?",["Для перевезення зерна","Щоб зняти стан посівів або обприскати рослини","Щоб полякати птахів","Для зв’язку з диспетчером"],1],
+ ["На супутниковій карті поля (NDVI) яскраво-зелені ділянки зазвичай означають:",["Здорові густі рослини","Воду","Дорогу","Хмари"],0],
+ ["Агроному треба швидко показати поломку сівалки. Як краще?",["Зателефонувати й описати словами","Надіслати в робочий чат фото, коротке пояснення і місце","Чекати кінця зміни","Написати в особисті повідомлення друзям"],1],
+ ["У якому форматі зручно зберегти таблицю витрат пального?",[".mp3",".xlsx",".jpg",".mp4"],1],
+ ["Двофакторна автентифікація - це вхід в акаунт:",["З двох телефонів","За паролем і кодом, що приходить на телефон","Без пароля","Удвох з другом"],1],
+ ["Агрегат двічі обробив ту саму смугу (перекриття). До чого це призводить?",["До економії","До перевитрати насіння, добрив і пального","До кращого врожаю","Ні до чого"],1],
+ ["Де безпечніше зберігати карти полів з бортового терміналу?",["Ніде, їх не треба зберігати","На флешці або в хмарі підприємства, з резервною копією","На чужому телефоні","Роздрукувати і викинути"],1]
+];
+const CODES=[["A-0105","Низька напруга живлення терміналу","Перевірити акумулятор і роз’єм живлення"],["A-0212","Знаряддя не відповідає","Перевірити роз’єм кабелю знаряддя"],["A-0417","Втрачено RTK-сигнал точності","Взяти керування на себе, перевірити зв’язок, продовжити після статусу RTK FIX"],["A-0533","Не вибрано профіль знаряддя","Вибрати профіль у меню «Машина»"],["A-0702","Пам’ять терміналу заповнена","Зберегти дані на флешку, видалити старі поля"],["A-0810","Завелика швидкість для автопілота","Зменшити швидкість"]];
+const TK=["Сівалка","Лінія А-В","Попередження","Облік зміни","Месенджер"];
+const STEPS=[["Старт",""],["Самооцінка","Частина 1 з 5"],["Ставлення","Частина 2 з 5"],["Квіз","Частина 3 з 5"],["Віртуальна зміна","Частина 4 з 5"],["Рефлексія","Частина 5 з 5"],["Результат",""]];
+const WORDS=["ЖИТО","ОВЕС","ЛЬОН","ПРОСО","ГРЕЧКА","РІПАК","СОЯ","КУКУРУДЗА","ЯЧМІНЬ","ПШЕНИЦЯ","СОНЯШНИК","ГОРОХ"];
+
+const S={step:0,id:"",group:"",stage:"В",self:[],mot:[],quiz:[],tasks:{},tk:0,refl:{},a:null,b:null,t0:0};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num=v=>parseFloat(String(v).replace(",","."));
+const f1=x=>(+x).toFixed(1).replace(".",","), f2=x=>(+x).toFixed(2).replace(".",",");
+function save(){try{localStorage.setItem("agro2",JSON.stringify(S))}catch(e){}}
+function load(){try{const r=JSON.parse(localStorage.getItem("agro2")||"null");if(r)Object.assign(S,r)}catch(e){}}
+function newId(){const w=WORDS[Math.floor(Math.random()*WORDS.length)];return w+"-"+(100+Math.floor(Math.random()*900))}
+function go(n){S.step=n;save();render();scrollTo({top:0,behavior:"smooth"})}
+function radios(name,opts,cur,cls){return `<div class="opts ${cls||""}">${opts.map((o,j)=>`<label class="opt"><input type="radio" name="${name}" value="${j}"${cur===j?" checked":""}><span class="dot"></span><span>${o}</span></label>`).join("")}</div>`}
+const val=n=>{const r=document.querySelector(`input[name="${n}"]:checked`);return r?+r.value:-1};
+
+/* ---- 0 старт ---- */
+function v0(){return `<section class="card"><div class="hero"><div style="display:flex;flex-direction:column;gap:16px">
+ <p class="eyebrow">Близько 20 хвилин · 5 коротких частин</p>
+ <h1>Наскільки ти готовий до <em>цифрового</em> трактора?</h1>
+ <p>Тут немає правильних «для оцінки» відповідей: це не контрольна, а перевірка того, що вже вмієш. Опитування анонімне - ми не питаємо імені, лише групу.</p>
+ <div class="chips"><span class="chip">самооцінка</span><span class="chip">квіз</span><span class="chip">віртуальна зміна в кабіні</span><span class="chip">результат одразу</span></div></div>
+ ${fieldArt()}</div>
+ <div class="grid2">
+  <div class="f"><label class="lbl" for="g">Твоя група</label><input type="text" id="g" value="${esc(S.group)}" placeholder="наприклад, 41" autocomplete="off"></div>
+  <div class="f"><label class="lbl" for="st">Етап</label><select id="st"><option value="В"${S.stage==="В"?" selected":""}>Перше проходження</option><option value="П"${S.stage==="П"?" selected":""}>Повторне проходження</option></select></div>
+ </div>
+ <div class="f" id="idwrap"${S.stage==="П"?"":" hidden"}><label class="lbl" for="pid">Твій анонімний код з першого проходження (якщо зберіг)</label><input type="text" id="pid" placeholder="наприклад, ОВЕС-274" value="${S.stage==="П"?esc(S.id):""}"></div>
+ <p class="err" id="e"></p>
+ <div class="nav"><span class="hint">Відповідай чесно і самостійно - так результат буде корисним саме тобі.</span><button class="go" id="next">Почати</button></div></section>`}
+function b0(){
+ $("#st").onchange=e=>{$("#idwrap").hidden=e.target.value!=="П"};
+ $("#next").onclick=()=>{const g=$("#g").value.trim();if(!g){$("#e").textContent="Вкажи групу.";return}
+  S.group=g;S.stage=$("#st").value;const p=($("#pid")?.value||"").trim().toUpperCase();
+  S.id=(S.stage==="П"&&p)?p:newId();S.t0=Date.now();S.self=[];S.mot=[];S.quiz=[];S.tasks={};S.tk=0;S.refl={};S.a=S.b=null;S.sent=null;go(1)}}
+function fieldArt(){return `<svg class="field-art" viewBox="0 0 280 220" aria-hidden="true"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF6E3"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs>
+ <rect width="280" height="220" rx="24" fill="url(#sk)"/><circle cx="214" cy="58" r="22" fill="#F4C95D"/>
+ <path d="M0 140 Q140 105 280 128 L280 220 L0 220Z" fill="#9BD47C"/><path d="M0 160 Q140 130 280 150 L280 220 L0 220Z" fill="#5FB83E"/>
+ ${[0,1,2,3,4,5].map(i=>`<path d="M${-20+i*55} 220 Q${110+i*12} 160 ${190+i*20} 138" stroke="#3E9A29" stroke-width="3" fill="none" opacity=".55"/>`).join("")}
+ <g transform="translate(70 92) scale(.072)"><image href="logo.png" width="1000" height="960"/></g></svg>`}
+
+/* ---- 1 самооцінка ---- */
+function v1(){return `<section class="card"><p class="eyebrow">Частина 1 · Я і цифра</p><h2>Що з цього ти вже вмієш?</h2><p class="lead">Обери чесно. Наприкінці побачиш, наскільки самооцінка збіглася з результатом.</p>
+ ${AREAS.map((a,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${a}</div>${radios("s"+i,SC,S.self[i]==null?-1:S.self[i]-1,"scale")}</div>`).join("")}
+ <p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">Далі</button></div></section>`}
+function b1(){$("#back").onclick=()=>go(0);$("#next").onclick=()=>{const v=AREAS.map((_,i)=>val("s"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі пункти.";return}S.self=v.map(x=>x+1);go(2)}}
+/* ---- 2 ставлення ---- */
+function v2(){return `<section class="card"><p class="eyebrow">Частина 2 · Ставлення</p><h2>Наскільки ти згоден?</h2>
+ ${MOT.map((m,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${m[0]}</div><div class="opts lik">${LIK.map((l,j)=>`<label class="opt"><input type="radio" name="m${i}" value="${j}"${S.mot[i]===j+1?" checked":""}><b>${j+1}</b>${l}</label>`).join("")}</div></div>`).join("")}
+ <p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">Далі</button></div></section>`}
+function b2(){$("#back").onclick=()=>go(1);$("#next").onclick=()=>{const v=MOT.map((_,i)=>val("m"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі твердження.";return}S.mot=v.map(x=>x+1);go(3)}}
+/* ---- 3 квіз ---- */
+function v3(){return `<section class="card"><p class="eyebrow">Частина 3 · Квіз</p><h2>12 життєвих ситуацій</h2><p class="lead">Обери одну відповідь. Якщо не знаєш - вибери ту, що здається найрозумнішою.</p>
+ ${QUIZ.map((q,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${q[0]}</div>${radios("q"+i,q[1],S.quiz[i]??-1)}</div>`).join("")}
+ <p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">До кабіни трактора</button></div></section>`}
+function b3(){$("#back").onclick=()=>go(2);$("#next").onclick=()=>{const v=QUIZ.map((_,i)=>val("q"+i));if(v.includes(-1)){$("#e").textContent=`Без відповіді: ${v.filter(x=>x<0).length}.`;return}S.quiz=v;S.tk=0;go(4)}}
+
+/* ---- 4 віртуальна зміна ---- */
+function head(){return `<div class="sbar"><span>ТЕРМІНАЛ <b>AT-10</b></span><span>GPS: <b>RTK FIX</b></span><span>ПОЛЕ <b>№7</b></span><span>${new Date().toLocaleDateString("uk-UA")}</span></div>
+ <div class="tabs">${TK.map((t,i)=>`<span class="${i===S.tk?"on":S.tasks["t"+i]!=null?"ok":""}">${i+1} ${t}</span>`).join("")}</div>`}
+function v4(){const k=S.tk;let b="";
+ if(k===0)b=`<h3>Налаштуй сівалку в терміналі</h3><div class="task">Агроном пише: «Сіємо соняшник сівалкою на <b>8 рядів</b>, відстань між рядами <b>0,7 м</b>». Термінал просить тип знаряддя і робочу ширину.</div>
+  <div class="grid2"><div class="f"><label class="lbl" for="pt">Тип знаряддя</label><select id="pt"><option value="">- обери -</option><option>Обприскувач</option><option>Сівалка</option><option>Культиватор</option></select></div>
+  <div class="f"><label class="lbl" for="pw">Робоча ширина, м</label><input type="text" id="pw" inputmode="decimal" placeholder="0,0"></div></div>
+  <p class="hint">Підказка: ширина = кількість рядів × відстань між рядами.</p>`;
+ if(k===1)b=`<h3>Задай лінію А-В</h3><div class="task">Торкнися двох точок на <b>нижній межі поля</b> (жовтий пунктир) - так трактор «запам’ятає» напрям руху.</div>
+  <canvas id="fld" width="800" height="500" aria-label="Карта поля"></canvas><div class="nav"><span class="hint" id="abi"></span><button id="abr">Скинути точки</button></div>
+  <div class="q"><div class="qt">Ширина сівалки 5,6 м. На якій відстані від лінії А-В трактор поїде наступним проходом?</div>${radios("ab2",["2,8 м","5,6 м","11,2 м","1 м"],-1)}</div>`;
+ if(k===2)b=`<h3>На екрані попередження</h3><div class="alarm"><i>!</i><span>A-0417 · RTK SIGNAL LOST</span></div>
+  <div class="f"><label class="lbl" for="ms">Пошук в електронній інструкції</label><input type="text" id="ms" placeholder="введи код, наприклад A-04"></div>
+  <div class="man"><table><thead><tr><th>Код</th><th>Що означає</th><th>Що робити</th></tr></thead><tbody id="mb"></tbody></table></div>
+  <div class="q"><div class="qt">Як правильно діяти?</div>${radios("c1",["Їхати далі на автопілоті, сигнал повернеться сам","Взяти керування на себе, перевірити зв’язок і продовжити після RTK FIX","Вимкнути й увімкнути трактор","Зупинитися і чекати до кінця зміни"],-1)}</div>`;
+ if(k===3)b=`<h3>Заповни облік зміни</h3><div class="task">Ширина агрегату <b>6 м</b>, швидкість <b>10 км/год</b>, працював <b>2 години</b> без зупинок, витратив <b>72 л</b> пального.</div>
+  <div class="grid2"><div class="f"><label class="lbl" for="wa">Оброблено, га</label><input type="text" id="wa" inputmode="decimal" placeholder="0"></div><div class="f"><label class="lbl" for="wf">Витрата пального, л/га</label><input type="text" id="wf" inputmode="decimal" placeholder="0"></div></div>
+  <p class="hint">Підказка: гектари за годину = ширина (м) × швидкість (км/год) ÷ 10. Витрата на гектар = літри ÷ гектари.</p>`;
+ if(k===4)b=`<h3>Робочий месенджер</h3><div class="task">Познач повідомлення, які схожі на <b>шахрайські</b>.</div>
+  <div style="display:flex;flex-direction:column;gap:8px">${[["Агроном Петренко","Поле №7: після дощу починаємо з 14:00."],["Сервіс-Дилер","ТЕРМІНОВО! Термінал заблокують через 2 год. Онови за посиланням agro-update.top і введи логін та пароль."],["Диспетчер Коваль","Надішли фото лічильника мотогодин після зміни."],["Бухгалтерія","Ви виграли премію 5000 грн! Вкажіть номер картки і CVV у формі за посиланням."]].map((m,j)=>`<label class="msg"><input type="checkbox" name="ph" value="${j}"><div><div class="from">${m[0]}</div><div class="body">${m[1]}</div></div></label>`).join("")}</div>
+  <div class="q"><div class="qt">Що робити з підозрілим повідомленням?</div>${radios("ph2",["Перейти за посиланням і перевірити","Не відкривати посилання, нічого не вводити, повідомити диспетчера","Переслати друзям","Відповісти відправнику"],-1)}</div>`;
+ return `<section class="cab"><div class="screen">${head()}${b}<p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">${k<4?"Далі":"Завершити зміну"}</button></div></div></section>`}
+const POLY=[[110,120],[690,70],[720,360],[140,430]];
+function drawF(){const c=$("#fld");if(!c)return;const g=c.getContext("2d");g.fillStyle="#1C3324";g.fillRect(0,0,800,500);
+ g.beginPath();POLY.forEach((p,i)=>i?g.lineTo(...p):g.moveTo(...p));g.closePath();g.fillStyle="#4E7F2C";g.fill();
+ g.strokeStyle="rgba(255,255,255,.14)";g.lineWidth=1;for(let i=1;i<14;i++){const t=i/14,a=[POLY[0][0]+(POLY[3][0]-POLY[0][0])*t,POLY[0][1]+(POLY[3][1]-POLY[0][1])*t],b=[POLY[1][0]+(POLY[2][0]-POLY[1][0])*t,POLY[1][1]+(POLY[2][1]-POLY[1][1])*t];g.beginPath();g.moveTo(...a);g.lineTo(...b);g.stroke()}
+ g.strokeStyle="#DCEBC8";g.lineWidth=2;g.beginPath();POLY.forEach((p,i)=>i?g.lineTo(...p):g.moveTo(...p));g.closePath();g.stroke();
+ g.strokeStyle="#F4C95D";g.lineWidth=5;g.setLineDash([14,10]);g.beginPath();g.moveTo(...POLY[3]);g.lineTo(...POLY[2]);g.stroke();g.setLineDash([]);
+ g.fillStyle="#E3EFE6";g.font="600 22px JetBrains Mono, monospace";g.fillText("Поле №7 · 48,6 га",24,42);
+ if(S.a&&S.b){g.strokeStyle="#7FD6FF";g.lineWidth=3;g.beginPath();g.moveTo(...S.a);g.lineTo(...S.b);g.stroke()}
+ [["A",S.a],["B",S.b]].forEach(([l,p])=>{if(!p)return;g.fillStyle="#7FD6FF";g.beginPath();g.arc(p[0],p[1],11,0,7);g.fill();g.fillStyle="#12201A";g.font="700 14px JetBrains Mono, monospace";g.fillText(l,p[0]-5,p[1]+5)});
+ $("#abi").textContent=S.a?(S.b?"Лінію А-В створено":"Точку А задано, задай точку В"):"Точки ще не задано"}
+function dseg(p,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/(dx*dx+dy*dy)));return Math.hypot(p[0]-a[0]-t*dx,p[1]-a[1]-t*dy)}
+function b4(){const k=S.tk;
+ $("#back").onclick=()=>{if(k===0)go(3);else{S.tk--;save();render()}};
+ if(k===1){drawF();const c=$("#fld");c.onclick=ev=>{const r=c.getBoundingClientRect(),p=[(ev.clientX-r.left)*800/r.width,(ev.clientY-r.top)*500/r.height];if(!S.a)S.a=p;else if(!S.b)S.b=p;else{S.a=p;S.b=null}save();drawF()};$("#abr").onclick=()=>{S.a=S.b=null;save();drawF()}}
+ if(k===2){const d=q=>{q=(q||"").toLowerCase();$("#mb").innerHTML=CODES.filter(c=>!q||c.join(" ").toLowerCase().includes(q)).map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td></tr>`).join("")||`<tr><td colspan="3">Нічого не знайдено</td></tr>`};d("");$("#ms").oninput=e=>d(e.target.value)}
+ $("#next").onclick=()=>{const e=$("#e");let s=0;
+  if(k===0){const t=$("#pt").value,w=num($("#pw").value);if(!t||isNaN(w)){e.textContent="Заповни обидва поля.";return}s=(t==="Сівалка"?2:0)+(Math.abs(w-5.6)<=.05?3:0)}
+  if(k===1){const q=val("ab2");if(!S.a||!S.b||q<0){e.textContent="Задай дві точки і дай відповідь.";return}const da=dseg(S.a,POLY[3],POLY[2]),db=dseg(S.b,POLY[3],POLY[2]),L=Math.hypot(S.a[0]-S.b[0],S.a[1]-S.b[1]);s=(da<=20&&db<=20?(L>=200?3:2):(da<=20||db<=20?1:0))+(q===1?2:0)}
+  if(k===2){const q=val("c1");if(q<0){e.textContent="Обери дію.";return}s=q===1?5:(q===3?1:0)}
+  if(k===3){const a=num($("#wa").value),f=num($("#wf").value);if(isNaN(a)||isNaN(f)){e.textContent="Заповни обидва поля.";return}s=(Math.abs(a-12)<=.05?3:0)+(Math.abs(f-6)<=.05?2:0)}
+  if(k===4){const m=$$("input[name=ph]:checked").map(x=>+x.value),q=val("ph2");if(!m.length||q<0){e.textContent="Познач повідомлення і обери дію.";return}const R=[1,3],h=R.filter(x=>m.includes(x)).length,fp=m.filter(x=>!R.includes(x)).length;s=Math.max(0,Math.min(3,h*1.5-fp*1.5))+(q===1?2:0)}
+  S.tasks["t"+k]=s;if(k<4){S.tk++;save();render();scrollTo({top:0})}else go(5)}}
+
+/* ---- 5 рефлексія ---- */
+function v5(){return `<section class="card"><p class="eyebrow">Частина 5 · Рефлексія</p><h2>Подумай про свою зміну</h2>
+ <div class="q"><div class="qt"><span class="qn">1</span>Яке завдання в кабіні було найскладнішим?</div>${radios("r1",TK.map((t,i)=>(i+1)+". "+t),-1)}</div>
+ <div class="q"><div class="qt"><span class="qn">2</span>На екрані техніки незнайомий код. Твій перший крок?</div>${radios("r2",["Проігнорую, якщо трактор їде","Знайду код в інструкції, оціню ризик і за потреби зупинюся","Подзвоню другу","Вимкну екран"],-1)}</div>
+ <div class="q"><div class="qt"><span class="qn">3</span>Що тобі варто підтягнути? (можна кілька)</div><div class="opts">${["Знання про електроніку і GPS техніки","Практику: налаштування, розрахунки, таблиці","Безпеку в інтернеті","Бажання вчитися новому"].map((o,j)=>`<label class="opt cb"><input type="checkbox" name="r3" value="${j}"><span class="dot"></span><span>${o}</span></label>`).join("")}</div></div>
+ <p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">Показати результат</button></div></section>`}
+function b5(){$("#back").onclick=()=>{S.tk=4;go(4)};$("#next").onclick=()=>{const a=val("r1"),b=val("r2"),c=$$("input[name=r3]:checked").map(x=>+x.value);if(a<0||b<0||!c.length){$("#e").textContent="Відповідай на всі запитання.";return}S.refl={h:a,a:b,p:c};S.done=Date.now();S.sent=null;go(6)}}
+
+/* ---- підрахунок ---- */
+function calc(){
+ const m=MOT.reduce((s,q,i)=>s+(q[1]?6-S.mot[i]:S.mot[i]),0),M=(m-10)/40*25;
+ const C=QUIZ.filter((q,i)=>S.quiz[i]===q[2]).length/QUIZ.length*25;
+ const tk=[0,1,2,3,4].map(i=>S.tasks["t"+i]||0),D=tk.reduce((a,b)=>a+b,0);
+ const sn=(S.self.reduce((a,b)=>a+b,0)/5-1)/3,act=(C+D)/50,diff=sn-act;
+ const adq=15*Math.max(0,1-Math.abs(diff)/.5);
+ const r1=tk[S.refl.h]===Math.min(...tk)?3:1, r2=S.refl.a===1?4:0;
+ const w=[[0,C],[1,D],[3,M]].sort((x,y)=>x[1]-y[1])[0][0], r3=S.refl.p.includes(w)?3:1;
+ const R=adq+r1+r2+r3, r=x=>Math.round(x*10)/10;
+ return {M:r(M),C:r(C),D:r(D),R:r(R),T:r(M+C+D+R),tk,diff:r(diff*100)}}
+const LV=t=>t<=40?1:t<=60?2:t<=80?3:4, LVN=["","Низький","Середній","Достатній","Високий"];
+const b64=s=>btoa(unescape(encodeURIComponent(s))), unb64=s=>decodeURIComponent(escape(atob(s)));
+function payload(R){return {v:2,id:S.id,g:S.group,e:S.stage,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,k:R.tk,s:S.self,q:S.quiz.map((x,i)=>x===QUIZ[i][2]?1:0),mt:S.mot,min:Math.max(1,Math.round((S.done-S.t0)/60000)),ts:new Date(S.done).toISOString().slice(0,16)}}
+function v6(){const R=calc(),L=LV(R.T),P=payload(R);S.code="ЦК2."+b64(JSON.stringify(P));save();
+ const C=2*Math.PI*70,off=C*(1-R.T/100);
+ const row=(n,v)=>`<div class="br"><span>${n}</span><div class="tr"><i style="width:${v/25*100}%"></i></div><span class="num">${f1(v)}/25</span></div>`;
+ const tip=R.diff>15?"Ти оцінюєш себе трохи вище, ніж показала практика. Перевіряй себе на справжніх завданнях.":R.diff<-15?"Ти вмієш більше, ніж думаєш. Сміливіше берись за складне!":"Твоя самооцінка майже збіглася з результатом - це рідкісна і корисна навичка.";
+ return `<section class="card"><p class="eyebrow">Результат · група ${esc(S.group)} · ${S.stage==="В"?"перше":"повторне"} проходження</p>
+ <div class="res"><div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" stroke="#EEF3EB" stroke-width="14" fill="none"/><circle cx="80" cy="80" r="70" stroke="var(--leaf)" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}"/></svg><div><b>${f1(R.T)}</b><small>зі 100</small></div></div>
+ <div style="display:flex;flex-direction:column;gap:14px"><span class="lv lv${L}" style="align-self:flex-start">${LVN[L]} рівень</span><div class="bars">${row("Ставлення",R.M)}${row("Знання",R.C)}${row("Практика",R.D)}${row("Самоаналіз",R.R)}</div></div></div>
+ <p class="lead">${tip}</p>
+ <div id="sendbox"></div>
+ <div class="saved"><div><div class="hint">Твій анонімний код - збережи його для повторного проходження</div><div class="idbox">${esc(S.id)}</div></div></div>
+ <div class="nav"><span class="hint">Можна зробити скріншот результату на згадку.</span><button id="again">Пройти ще раз</button></div></section>`}
+async function b6(){$("#again").onclick=()=>{S.step=0;save();render()};
+ const box=$("#sendbox");
+ if(!ENDPOINT){box.innerHTML=`<div class="saved warn"><div style="display:flex;flex-direction:column;gap:8px;width:100%"><b>Надішли цей код викладачу</b><div class="code" id="code">${S.code}</div><div><button id="cp">Копіювати код</button></div></div></div>`;
+  $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(S.code);$("#cp").textContent="Скопійовано"}catch(e){const r=document.createRange();r.selectNodeContents($("#code"));getSelection().removeAllRanges();getSelection().addRange(r);$("#cp").textContent="Виділено - натисни Ctrl+C"}};return}
+ if(S.sent===S.code){box.innerHTML=`<div class="saved">✓ Відповідь збережено анонімно. Дякуємо!</div>`;return}
+ box.innerHTML=`<div class="saved">Зберігаємо відповідь…</div>`;
+ try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.code;save();box.innerHTML=`<div class="saved">✓ Відповідь збережено анонімно. Дякуємо!</div>`}
+ catch(e){box.innerHTML=`<div class="saved warn"><div style="display:flex;flex-direction:column;gap:8px;width:100%"><b>Не вдалося надіслати автоматично. Надішли код викладачу:</b><div class="code">${S.code}</div></div></div>`}}
+
+/* ---- панель викладача ---- */
+function vT(){return `<section class="card"><p class="eyebrow">Для викладача</p><h2>Результати груп</h2>
+ <p class="lead">Завантаж відповіді з таблиці (якщо налаштовано збереження) або встав коди, які надіслали студенти. Програма розподілить студентів за рівнями, порахує середні бали і перевірить відмінність між групами за критерієм χ² Пірсона.</p>
+ ${ENDPOINT?`<div class="grid2"><div class="f"><label class="lbl" for="key">Ключ доступу до відповідей</label><input type="text" id="key" autocomplete="off"></div><div class="f" style="justify-content:flex-end"><button class="go" id="loadsrv">Завантажити відповіді</button></div></div>`:""}
+ <div class="f"><label class="lbl" for="codes">Або встав коди (кожен з нового рядка)</label><textarea id="codes" placeholder="ЦК2...."></textarea></div>
+ <div class="grid2"><div class="f"><label class="lbl" for="eg">Експериментальна група</label><select id="eg"></select></div><div class="f"><label class="lbl" for="kg">Контрольна група</label><select id="kg"></select></div></div>
+ <div class="nav"><span class="hint" id="pinfo">Даних ще немає.</span><div style="display:flex;gap:10px;flex-wrap:wrap"><a href="#" style="align-self:center;color:var(--leaf-d)">До опитування</a><button class="go" id="an">Обробити</button></div></div></section><div id="rep" style="display:flex;flex-direction:column;gap:22px"></div>`}
+let ROWS=[],SRV=[];
+function parse(){const out=[...SRV];const seen=new Set(out.map(o=>o.id+o.e));let bad=0;
+ $("#codes").value.split(/\s+/).filter(x=>/^ЦК[12]\./.test(x)).forEach(l=>{try{const o=JSON.parse(unb64(l.slice(4)));o.id=o.id||o.n;if(seen.has(o.id+o.e))return;seen.add(o.id+o.e);out.push(o)}catch(e){bad++}});
+ ROWS=out;const gs=[...new Set(out.map(o=>String(o.g)))].sort();["#eg","#kg"].forEach((s,i)=>{const cur=$(s).value;$(s).innerHTML=gs.map(g=>`<option${g===cur?" selected":""}>${esc(g)}</option>`).join("");if(!cur&&gs[i])$(s).value=gs[i]});
+ $("#pinfo").textContent=out.length?`Відповідей: ${out.length}${bad?`, пошкоджених кодів: ${bad}`:""}. Груп: ${gs.length}.`:"Даних ще немає."}
+function lg(z){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,.1208650973866179e-2,-.5395239384953e-5];let x=z,y=z,t=x+5.5;t-=(x+.5)*Math.log(t);let s=1.000000000190015;for(const k of c)s+=k/++y;return -t+Math.log(2.5066282746310005*s/x)}
+function gp(a,x){if(x<=0)return 0;let s=1/a,t=1/a;for(let n=1;n<300;n++){t*=x/(a+n);s+=t;if(t<s*1e-12)break}return s*Math.exp(-x+a*Math.log(x)-lg(a))}
+function chi(a,b){const na=a.reduce((x,y)=>x+y,0),nb=b.reduce((x,y)=>x+y,0),N=na+nb;let x2=0,df=0,small=0;for(let i=0;i<a.length;i++){const c=a[i]+b[i];if(!c)continue;df++;const ea=na*c/N,eb=nb*c/N;if(ea<5||eb<5)small++;x2+=(a[i]-ea)**2/ea+(b[i]-eb)**2/eb}df=Math.max(1,df-1);return{x2,df,p:1-gp(df/2,x2/2),small}}
+const CR={1:3.84,2:5.99,3:7.81};const dist=r=>{const d=[0,0,0,0];r.forEach(x=>d[LV(x.T)-1]++);return d};const mean=(r,k)=>r.length?r.reduce((s,x)=>s+x[k],0)/r.length:0;const pc=(x,n)=>n?f1(x/n*100):"-";
+function analyze(){parse();const R=$("#rep");if(!ROWS.length){R.innerHTML=`<div class="card"><p class="lead">Даних ще немає. Попроси студентів пройти опитування.</p></div>`;return}
+ const eg=$("#eg").value,kg=$("#kg").value;let h="",tsv=[];
+ ["В","П"].forEach(st=>{const A=ROWS.filter(r=>String(r.g)===eg&&r.e===st),B=ROWS.filter(r=>String(r.g)===kg&&r.e===st);if(!A.length&&!B.length)return;const da=dist(A),db=dist(B),nm=st==="В"?"Перше проходження (констатувальний етап)":"Повторне проходження (контрольний етап)";
+  let t=`<section class="card"><h2>${nm}</h2><div class="tbl"><table><tr><th rowspan="2">Рівень</th><th colspan="2">ЕГ (${esc(eg)}), n = ${A.length}</th><th colspan="2">КГ (${esc(kg)}), n = ${B.length}</th></tr><tr><th>осіб</th><th>%</th><th>осіб</th><th>%</th></tr>`;tsv.push(nm,"Рівень\tЕГ осіб\tЕГ %\tКГ осіб\tКГ %");
+  for(let i=3;i>=0;i--){t+=`<tr><td>${LVN[i+1]}</td><td>${da[i]}</td><td>${pc(da[i],A.length)}</td><td>${db[i]}</td><td>${pc(db[i],B.length)}</td></tr>`;tsv.push([LVN[i+1],da[i],pc(da[i],A.length),db[i],pc(db[i],B.length)].join("\t"))}
+  t+=`</table></div><div class="tbl"><table><tr><th>Критерій (макс. 25)</th><th>ЕГ</th><th>КГ</th></tr>`;tsv.push("","Критерій\tЕГ\tКГ");
+  [["Мотиваційний","M"],["Когнітивний","C"],["Діяльнісний","D"],["Рефлексивний","R"],["Загальний (зі 100)","T"]].forEach(([n,k])=>{t+=`<tr><td>${n}</td><td>${f1(mean(A,k))}</td><td>${f1(mean(B,k))}</td></tr>`;tsv.push([n,f1(mean(A,k)),f1(mean(B,k))].join("\t"))});t+=`</table></div>`;
+  if(A.length&&B.length){const c=chi(da,db),sig=c.x2>CR[c.df];t+=`<div class="verdict${sig?"":" no"}">χ²емп = ${f2(c.x2)}; χ²кр = ${f2(CR[c.df])} (α = 0,05; df = ${c.df}); p = ${c.p<.001?"< 0,001":f2(c.p)}. ${sig?"Відмінності між ЕГ і КГ статистично значущі.":"Статистично значущих відмінностей між ЕГ і КГ немає."}${c.small?` <span class="hint">У ${c.small} комірках очікувана частота менша за 5 - висновок орієнтовний.</span>`:""}</div>`;tsv.push("",`χ2емп = ${f2(c.x2)}; χ2кр = ${f2(CR[c.df])}; df = ${c.df}; p = ${f2(c.p)}`)}
+  t+=chart(da,db,A.length,B.length)+"</section>";h+=t;tsv.push("","")});
+ const all=ROWS.filter(r=>r.q);if(all.length){h+=`<section class="card"><h2>Квіз: частка правильних відповідей</h2><div class="tbl"><table><tr><th>Запитання</th><th>Правильно, %</th></tr>${QUIZ.map((q,i)=>`<tr><td>${i+1}. ${q[0]}</td><td>${f1(all.filter(r=>r.q[i]).length/all.length*100)}</td></tr>`).join("")}</table></div></section>`}
+ h+=`<section class="card"><h2>Усі відповіді (анонімно)</h2><div class="tbl"><table><tr><th>Код</th><th>Група</th><th>Етап</th><th>М</th><th>К</th><th>Д</th><th>Р</th><th>Разом</th><th>Рівень</th></tr>${ROWS.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.g)}</td><td>${r.e}</td><td>${f1(r.M)}</td><td>${f1(r.C)}</td><td>${f1(r.D)}</td><td>${f1(r.R)}</td><td>${f1(r.T)}</td><td>${LVN[LV(r.T)]}</td></tr>`).join("")}</table></div><div class="nav"><span class="hint">Таблиці копіюються у форматі для Excel і Word.</span><button class="go" id="ct">Копіювати таблиці</button></div><textarea id="tsv" hidden></textarea></section>`;
+ R.innerHTML=h;$("#tsv").value=tsv.join("\n");$("#ct").onclick=async()=>{try{await navigator.clipboard.writeText($("#tsv").value);$("#ct").textContent="Скопійовано"}catch(e){const t=$("#tsv");t.hidden=false;t.select()}}}
+function chart(da,db,na,nb){const W=640,H=260,pl=44,pb=40,pt=20,cw=(W-pl-10)/4,pa=da.map(x=>na?x/na*100:0),pq=db.map(x=>nb?x/nb*100:0),mx=Math.max(50,...pa,...pq),y=v=>H-pb-(v/mx)*(H-pb-pt);
+ let s=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Розподіл за рівнями, %">`;for(let v=0;v<=mx;v+=10)s+=`<line x1="${pl}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E4ECE0"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="#5B6B5E">${v}%</text>`;
+ for(let i=0;i<4;i++){const x=pl+i*cw+cw*.17,bw=cw*.3;s+=`<rect x="${x}" y="${y(pa[i])}" width="${bw}" height="${H-pb-y(pa[i])}" rx="4" fill="#23A019"/><rect x="${x+bw+5}" y="${y(pq[i])}" width="${bw}" height="${H-pb-y(pq[i])}" rx="4" fill="#F4C95D"/><text x="${pl+i*cw+cw/2}" y="${H-pb+22}" text-anchor="middle" font-size="12" fill="#16241A">${LVN[i+1]}</text>`}
+ return s+`<rect x="${W-160}" y="4" width="12" height="12" rx="3" fill="#23A019"/><text x="${W-142}" y="14" font-size="12">ЕГ</text><rect x="${W-100}" y="4" width="12" height="12" rx="3" fill="#F4C95D"/><text x="${W-82}" y="14" font-size="12">КГ</text></svg></div>`}
+function bT(){$("#codes").oninput=parse;$("#an").onclick=analyze;
+ if($("#loadsrv"))$("#loadsrv").onclick=async()=>{$("#pinfo").textContent="Завантаження…";try{const r=await fetch(ENDPOINT+"?key="+encodeURIComponent($("#key").value));const j=await r.json();if(j.error){$("#pinfo").textContent="Неправильний ключ.";return}SRV=j.rows||[];analyze()}catch(e){$("#pinfo").textContent="Не вдалося завантажити відповіді."}}}
+
+/* ---- рендер ---- */
+const V=[[v0,b0],[v1,b1],[v2,b2],[v3,b3],[v4,b4],[v5,b5],[v6,b6]];
+function render(){const t=location.hash==="#teacher";$("#prog").hidden=t||S.step===0;
+ if(t){$("#app").innerHTML=vT();bT();return}
+ const st=STEPS[S.step];$("#bar").style.width=(S.step/6*100)+"%";$("#slbl").textContent=st[0];$("#scount").textContent=st[1];
+ $("#app").innerHTML=V[S.step][0]();V[S.step][1]()}
+addEventListener("hashchange",render);load();render();
+</script>
+</body>
+</html>
