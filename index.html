@@ -160,14 +160,14 @@ const val=n=>{const r=document.querySelector(`input[name="${n}"]:checked`);retur
 const prog=()=>`<div class="prog"><div class="bar"><i style="width:${(S.step-1)/5*100}%"></i></div><div class="pl"><span>${STEPS[S.step]}</span><span>Крок ${S.step} з 5</span></div></div>`;
 const navb=(nx)=>`<p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">${nx||"Далі"}</button></div>`;
 
-function v0(){return `<section class="hero"><div class="in"><div class="meta"><span>5 хвилин</span><span>без імені</span><span>результат одразу</span></div>
+function v0(){return `<section class="hero"><div class="in"><div class="meta"><span>5 хвилин</span><span>без імені й групи</span><span>результат одразу</span></div>
  <h1>Наскільки ти готовий до <em>цифрового</em> поля?</h1><p>Коротке опитування про електроніку техніки, GPS, дрони і безпеку в телефоні. Це не контрольна - відповідай так, як є.</p></div></section>
- <section class="card"><div class="grid2"><div class="f"><label class="lbl" for="g">Твоя група</label><input type="text" id="g" value="${esc(S.group)}" placeholder="наприклад, 41" autocomplete="off"></div>
- <div class="f"><label class="lbl" for="st">Проходиш</label><select id="st"><option value="В"${S.stage==="В"?" selected":""}>Вперше</option><option value="П"${S.stage==="П"?" selected":""}>Повторно</option></select></div></div>
- <div class="f" id="iw"${S.stage==="П"?"":" hidden"}><label class="lbl" for="pid">Твій код з першого разу (якщо зберіг)</label><input type="text" id="pid" placeholder="наприклад, ОВЕС-274"></div>
- <p class="err" id="e"></p><div class="nav"><span class="hint">Ми не питаємо ім’я - лише групу.</span><button class="go" id="next">Почати опитування</button></div></section>`}
-function b0(){$("#st").onchange=e=>{$("#iw").hidden=e.target.value!=="П"};$("#next").onclick=()=>{const g=$("#g").value.trim();if(!g){$("#e").textContent="Вкажи групу.";return}
- S.group=g;S.stage=$("#st").value;const p=($("#pid").value||"").trim().toUpperCase();S.id=S.stage==="П"&&p?p:newId();S.t0=Date.now();S.self=[];S.mot=[];S.know=[];S.act=[];S.refl={};S.sent=null;go(1)}}
+ <section class="card"><div class="grid2"><div class="f"><label class="lbl" for="st">Проходиш</label><select id="st"><option value="В"${S.stage==="В"?" selected":""}>Вперше</option><option value="П"${S.stage==="П"?" selected":""}>Повторно</option></select></div>
+ <div class="f" id="iw"${S.stage==="П"?"":" hidden"}><label class="lbl" for="pid">Твій код з першого разу (якщо зберіг)</label><input type="text" id="pid" placeholder="наприклад, ОВЕС-274"></div></div>
+ <p class="err" id="e"></p><div class="nav"><span class="hint">Ми не питаємо ні ім’я, ні групу.</span><button class="go" id="next">Почати опитування</button></div></section>`}
+const URLG=(new URLSearchParams(location.search).get("g")||"").slice(0,20);
+function b0(){$("#st").onchange=e=>{$("#iw").hidden=e.target.value!=="П"};$("#next").onclick=()=>{
+ S.group=URLG||"-";S.stage=$("#st").value;const p=($("#pid").value||"").trim().toUpperCase();S.id=S.stage==="П"&&p?p:newId();S.t0=Date.now();S.self=[];S.mot=[];S.know=[];S.act=[];S.refl={};S.sent=null;go(1)}}
 function v1(){return `<section class="card">${prog()}<h2>Що з цього ти вже вмієш?</h2><p class="lead">Обери чесно - наприкінці побачиш, чи збіглася самооцінка з відповідями.</p>
  ${AREAS.map((a,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${a}</div>${radios("s"+i,SC,S.self[i]==null?-1:S.self[i]-1,"s4")}</div>`).join("")}${navb()}</section>`}
 function b1(){$("#back").onclick=()=>go(0);$("#next").onclick=()=>{const v=AREAS.map((_,i)=>val("s"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі пункти.";return}S.self=v.map(x=>x+1);go(2)}}
@@ -198,7 +198,7 @@ const payload=R=>({v:3,id:S.id,g:S.group,e:S.stage,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T
 function v6(){const R=calc(),L=LV(R.T);S.code="ЦК3."+b64(JSON.stringify(payload(R)));save();const C=2*Math.PI*70;
  const row=(n,v)=>`<div class="br"><span>${n}</span><div class="tr"><i style="width:${v/25*100}%"></i></div><span class="num">${f1(v)}/25</span></div>`;
  const tip=R.diff>15?"Ти оцінюєш себе трохи вище, ніж показали відповіді. Перевіряй себе на справжніх завданнях.":R.diff<-15?"Ти знаєш більше, ніж думаєш. Сміливіше берись за складне!":"Твоя самооцінка майже збіглася з відповідями - це корисна навичка.";
- return `<section class="card"><p class="eyebrow">Твій результат · група ${esc(S.group)}</p>
+ return `<section class="card"><p class="eyebrow">Твій результат</p>
  <div class="res"><div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" stroke="#EEF3EB" stroke-width="14" fill="none"/><circle cx="80" cy="80" r="70" stroke="#23A019" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-R.T/100)}"/></svg><div><b>${f1(R.T)}</b><small>зі 100</small></div></div>
  <div style="display:flex;flex-direction:column;gap:14px"><span class="lv lv${L}">${LVN[L]} рівень</span><div class="bars">${row("Ставлення",R.M)}${row("Знання",R.C)}${row("Дії",R.D)}${row("Самоаналіз",R.R)}</div></div></div>
  <p class="lead">${tip}</p><div id="sb"></div>
