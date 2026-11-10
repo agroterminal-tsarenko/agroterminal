@@ -113,7 +113,7 @@ footer a{color:var(--leaf-d)}
     <span class="anon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Анонімно</span>
   </header>
   <main id="app"></main>
-  <footer><span>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026</span><span>Фото: Raphael Rychetsky / Unsplash · <a href="#teacher">Для викладача</a></span></footer>
+  <footer><span>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026</span><span>Фото: Raphael Rychetsky / Unsplash</span></footer>
 </div>
 <script>
 "use strict";
@@ -125,24 +125,24 @@ const SC=["Ще ні","З підказкою","Сам","Навчу інших"];
 const MOT=[["Уміння працювати з електронікою техніки знадобляться мені на роботі",0],["Мені цікаво, як трактор сам їде рівно по GPS",0],["Я готовий вчитися новим програмам, якщо цього вимагатиме робота",0],["Механізатору достатньо вміти керувати трактором, а цифрові штуки - зайве",1],["Я дбаю, щоб мої паролі ніхто не дізнався",0],["Я хотів би працювати на сучасній техніці з автопілотом",0],["Заняття з комп’ютером чи смартфоном мені подобаються більше за звичайні",0],["У робочих чатах треба писати коротко, ввічливо і по суті",0],["Цифрові технології в господарствах - це далеке майбутнє, мені це не потрібно",1],["Я дивлюся відео чи читаю про нову агротехніку в інтернеті",0]];
 const LIK=["Ні","Скоріше ні","Не знаю","Скоріше так","Так"];
 const KNOW=[
- ["Що таке бортовий термінал трактора?",["Розетка для зарядки телефона","Комп’ютер з екраном у кабіні, через який налаштовують роботу техніки","Запасний бак","Радіо"],1],
- ["Навіщо трактору GPS-навігація?",["Щоб слухати радіо","Щоб їхати рівно і без пропусків між проходами","Щоб економити оливу","Щоб рахувати зарплату"],1],
- ["Для чого найчастіше використовують дрон над полем?",["Для перевезення зерна","Щоб зняти стан посівів або обприскати рослини","Щоб полякати птахів","Для зв’язку з диспетчером"],1],
- ["На супутниковій карті поля (NDVI) яскраво-зелені ділянки зазвичай означають:",["Здорові густі рослини","Воду","Дорогу","Хмари"],0],
- ["Агрегат двічі обробив ту саму смугу (перекриття). До чого це призводить?",["До економії","До перевитрати насіння, добрив і пального","До кращого врожаю","Ні до чого"],1],
- ["Який пароль найнадійніший?",["123456","Своє ім’я","Дата народження","Pshenytsia!Pole7-2026"],3],
- ["Двофакторна автентифікація - це вхід в акаунт:",["З двох телефонів","За паролем і кодом, що приходить на телефон","Без пароля","Удвох з другом"],1],
- ["У якому форматі зручно зберегти таблицю витрат пального?",[".mp3",".xlsx",".jpg",".mp4"],1]
+ ["Яку похибку має звичайний GPS у тракторі без поправок і з RTK-поправкою?",["Однакову - близько 2-3 см","Без поправок близько 1-3 м, з RTK - близько 2-3 см","Без поправок 10-20 см, з RTK - близько 1 м","RTK лише економить заряд приймача"],1],
+ ["Що дає стандарт ISOBUS?",["Керувати сівалкою чи обприскувачем будь-якого виробника з одного терміналу трактора","Під’єднати телефон до трактора через Bluetooth","Замінити GPS-антену","Автоматично заправляти техніку"],0],
+ ["Агроном показує карту NDVI поля. Для чого вона найкорисніша?",["Точно виміряти вологість ґрунту","Знайти ділянки зі слабшими рослинами і внести там добрива диференційовано","Побачити кожен бур’ян окремо","Порахувати, скільки техніки працює в полі"],1],
+ ["Що робить функція автоматичного відключення секцій на обприскувачі?",["Вимикає двигун на розворотах","Сама вимикає секції там, де поле вже оброблене або за межею поля","Зменшує тиск у шинах","Перемикає передачі"],1],
+ ["Що бачить диспетчер у системі телематики?",["Лише дату останнього ТО","Де техніка, з якою швидкістю працює, скільки витрачає пального - майже в реальному часі","Особисті повідомлення механізатора","Прогноз погоди"],1],
+ ["Лист «від дилера техніки» прийшов з адреси support@agro-servis-update.top. Що найбільше насторожує?",["Лист англійською","Адреса не з офіційного домену дилера","У листі є логотип","Лист прийшов увечері"],1],
+ ["Навіщо робити резервну копію ліній руху і меж полів з терміналу?",["Щоб термінал працював швидше","Щоб у разі поломки чи заміни терміналу не створювати все заново і зберегти точність","Так вимагає закон","Щоб звільнити місце для музики"],1],
+ ["Чим допомагає двофакторна автентифікація, якщо пароль від акаунта вкрали?",["Нічим - пароль усе вирішує","Без коду з твого телефону зловмисник однаково не увійде","Пароль сам зміниться","Акаунт буде видалено"],1]
 ];
 const ACT=[
- ["На панелі трактора засвітився незнайомий значок. Що зробиш?",["Не звертатиму уваги","Знайду значення в інструкції або на сайті виробника","Одразу вимкну двигун і піду","Спитаю в коментарях у соцмережах"],1],
- ["Увімкнено автопілот. Що робиш ти?",["Сплю - техніка все зробить сама","Стежу за роботою і готовий взяти кермо","Виходжу з кабіни","Граю в телефоні"],1],
- ["На екрані з’явилося «A-0417: втрачено RTK-сигнал точності». Твої дії?",["Їду далі на автопілоті","Беру керування на себе, перевіряю зв’язок і продовжую, коли з’явиться RTK FIX","Вимикаю й вмикаю трактор","Чекаю до кінця зміни"],1],
- ["Агроном пише: «сівалка на 8 рядів, міжряддя 0,7 м». Яку робочу ширину введеш у термінал?",["0,7 м","8 м","5,6 м","15 м"],2],
- ["Ширина агрегату 6 м, швидкість 10 км/год, працював 2 години без зупинок. Скільки гектарів обробив? (га за год = ширина × швидкість ÷ 10)",["6 га","12 га","60 га","120 га"],1],
- ["Прийшло повідомлення: «Терміново! Термінал заблокують. Перейдіть за посиланням і введіть пароль». Що зробиш?",["Перейду за посиланням","Не відкриватиму посилання, нічого не вводитиму і повідомлю диспетчера","Перешлю друзям","Відповім і спитаю, чи це правда"],1],
- ["Треба швидко показати агроному поломку сівалки. Як зробиш?",["Опишу словами в кінці зміни","Надішлю в робочий чат фото, коротке пояснення і місце","Напишу друзям","Нічого не робитиму"],1],
- ["Де збережеш карти полів і лінії руху з терміналу?",["Ніде","На флешці або в хмарі підприємства, з резервною копією","На чужому телефоні","Роздрукую і викину"],1]
+ ["Автопілот веде агрегат, але проходи раптом почали «гуляти» на 20-30 см. Що найімовірніше?",["Погіршилась погода","Зник RTK-сигнал і приймач працює без поправки","Закінчується пальне","Забився повітряний фільтр"],1],
+ ["Агроном пише: «сівалка на 8 рядів, міжряддя 70 см». Яку робочу ширину введеш у термінал?",["4,9 м","5,6 м","6,3 м","7,0 м"],1],
+ ["Ширина агрегату 6 м, швидкість 10 км/год, 2 години роботи без зупинок. Скільки гектарів обробив?",["6 га","10 га","12 га","20 га"],2],
+ ["За зміну оброблено 12 га, витрачено 72 л пального. Яку витрату запишеш у звіт?",["6 л/га","8 л/га","0,17 л/га","84 л/га"],0],
+ ["На розворотах щоразу виходить перекриття близько 1 м. Що перевіриш насамперед?",["Тиск у шинах","Введені в термінал ширину і зміщення знаряддя","Рівень оливи","Яскравість екрана"],1],
+ ["Термінал обприскувача показує: норма 200 л/га, фактично 160 л/га. Що зробиш?",["Збільшу швидкість","Зупинюся, перевірю фільтри, форсунки і калібрування витратоміра","Працюватиму далі - різниця невелика","Вимкну термінал"],1],
+ ["У Viber пише новий номер: «Це агроном, змінив телефон. Надішли код із СМС, що зараз прийде». Як вчиниш?",["Надішлю - це ж агроном","Не надсилатиму, передзвоню агроному на старий відомий номер","Надішлю половину коду","Попрошу фото посвідчення"],1],
+ ["Термінал пише «Пам’ять заповнена», а попереду ще поле. Що зробиш?",["Видалю всі дані підряд","Збережу старі поля на флешку чи в хмару і лише потім видалю їх з терміналу","Працюватиму без запису","Перезавантажуватиму термінал, доки не зникне"],1]
 ];
 const WORDS=["ЖИТО","ОВЕС","ЛЬОН","ПРОСО","ГРЕЧКА","РІПАК","СОЯ","ЯЧМІНЬ","ПШЕНИЦЯ","СОНЯШНИК","ГОРОХ","КУКУРУДЗА"];
 const STEPS=["","Я і цифра","Ставлення","Знання","Що зробиш?","Наостанок",""];
@@ -175,9 +175,9 @@ function v2(){return `<section class="card">${prog()}<h2>Наскільки ти
  ${MOT.map((m,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${m[0]}</div><div class="opts s5">${LIK.map((l,j)=>`<label class="opt"><input type="radio" name="m${i}" value="${j}"${S.mot[i]===j+1?" checked":""}><b>${j+1}</b>${l}</label>`).join("")}</div></div>`).join("")}${navb()}</section>`}
 function b2(){$("#back").onclick=()=>go(1);$("#next").onclick=()=>{const v=MOT.map((_,i)=>val("m"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі твердження.";return}S.mot=v.map(x=>x+1);go(3)}}
 function qblock(arr,key,title,lead,i0){return `<section class="card">${prog()}<h2>${title}</h2><p class="lead">${lead}</p>${arr.map((q,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${q[0]}</div>${radios(key+i,q[1],S[key==="k"?"know":"act"][i]??-1)}</div>`).join("")}${navb()}</section>`}
-function v3(){return qblock(KNOW,"k","Що ти знаєш про цифрове поле?","Обери одну відповідь. Не знаєш - вибери ту, що здається найрозумнішою.")}
+function v3(){return qblock(KNOW,"k","Що ти знаєш про цифрове поле?","Обери одну відповідь. Не знаєш - вибери ту, що здається найлогічнішою.")}
 function b3(){$("#back").onclick=()=>go(2);$("#next").onclick=()=>{const v=KNOW.map((_,i)=>val("k"+i));if(v.includes(-1)){$("#e").textContent=`Без відповіді: ${v.filter(x=>x<0).length}.`;return}S.know=v;go(4)}}
-function v4(){return qblock(ACT,"a","Що зробиш у такій ситуації?","Уяви, що ти вже працюєш механізатором у сучасному господарстві.")}
+function v4(){return qblock(ACT,"a","Що зробиш у такій ситуації?","Уяви, що ти вже працюєш механізатором у сучасному господарстві. Тут знадобиться трохи порахувати.")}
 function b4(){$("#back").onclick=()=>go(3);$("#next").onclick=()=>{const v=ACT.map((_,i)=>val("a"+i));if(v.includes(-1)){$("#e").textContent=`Без відповіді: ${v.filter(x=>x<0).length}.`;return}S.act=v;go(5)}}
 function v5(){return `<section class="card">${prog()}<h2>Наостанок</h2>
  <div class="q"><div class="qt"><span class="qn">1</span>У техніці з’явилася нова система, якої ти не знаєш. Як будеш її опановувати?</div>${radios("r1",["Чекатиму, поки хтось покаже","Почитаю інструкцію, подивлюся відео виробника, спробую і спитаю, якщо не вийде","Не буду - мені й так нормально","Натискатиму все підряд"],-1)}</div>
@@ -207,17 +207,16 @@ function v6(){const R=calc(),L=LV(R.T);S.code="ЦК3."+b64(JSON.stringify(payloa
 async function b6(){$("#again").onclick=()=>{S.step=0;save();render()};const sb=$("#sb");
  const manual=t=>{sb.innerHTML=`<div class="box w"><div style="display:flex;flex-direction:column;gap:8px;width:100%"><b>${t}</b><div class="code" id="code">${S.code}</div><div><button id="cp">Копіювати код</button></div></div></div>`;
   $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(S.code);$("#cp").textContent="Скопійовано"}catch(e){const r=document.createRange();r.selectNodeContents($("#code"));getSelection().removeAllRanges();getSelection().addRange(r);$("#cp").textContent="Виділено - натисни Ctrl+C"}}};
- if(!ENDPOINT){manual("Надішли цей код викладачу");return}
+ if(!ENDPOINT){sb.innerHTML="";return}
  if(S.sent===S.code){sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`;return}
  sb.innerHTML=`<div class="box">Зберігаємо відповіді…</div>`;
  try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.code;save();sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`}catch(e){manual("Не вдалося надіслати автоматично. Надішли код викладачу:")}}
 
 /* ---- панель викладача ---- */
-function vT(){return `<section class="card"><p class="eyebrow">Для викладача</p><h2>Результати груп</h2><p class="lead">Завантаж відповіді з таблиці або встав коди студентів. Програма розподілить студентів за рівнями, порахує середні бали і перевірить відмінність між групами за критерієм χ² Пірсона.</p>
- ${ENDPOINT?`<div class="grid2"><div class="f"><label class="lbl" for="key">Ключ доступу</label><input type="text" id="key" autocomplete="off"></div><div class="f" style="justify-content:flex-end"><button class="go" id="ld">Завантажити відповіді</button></div></div>`:""}
- <div class="f"><label class="lbl" for="codes">Коди студентів (кожен з нового рядка)</label><textarea id="codes" placeholder="ЦК3...."></textarea></div>
- <div class="grid2"><div class="f"><label class="lbl" for="eg">Експериментальна група</label><select id="eg"></select></div><div class="f"><label class="lbl" for="kg">Контрольна група</label><select id="kg"></select></div></div>
- <div class="nav"><span class="hint" id="pi">Даних ще немає.</span><div style="display:flex;gap:12px;align-items:center"><a href="#" style="color:var(--leaf-d)">До опитування</a><button class="go" id="an">Обробити</button></div></div></section><div id="rep" style="display:flex;flex-direction:column;gap:20px"></div>`}
+function vT(){return `<section class="card"><p class="eyebrow">Закритий розділ</p><h2>Результати опитування</h2>
+ <div class="grid2"><div class="f"><label class="lbl" for="key">Пароль</label><input type="password" id="key" autocomplete="current-password" style="font:inherit;background:#FAFCF8;border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;width:100%"></div><div class="f" style="justify-content:flex-end"><button class="go" id="ld">Увійти</button></div></div>
+ <div id="sel" hidden><div class="grid2"><div class="f"><label class="lbl" for="eg">Експериментальна група</label><select id="eg"></select></div><div class="f"><label class="lbl" for="kg">Контрольна група</label><select id="kg"></select></div></div></div>
+ <div class="nav"><span class="hint" id="pi">${ENDPOINT?"Введи пароль, щоб побачити відповіді.":"Збереження відповідей ще не налаштовано."}</span><a href="#" style="color:var(--leaf-d)">До опитування</a></div><textarea id="codes" hidden></textarea></section><div id="rep" style="display:flex;flex-direction:column;gap:20px"></div>`}
 let ROWS=[],SRV=[];
 function parse(){const out=[...SRV],seen=new Set(out.map(o=>o.id+o.e));let bad=0;$("#codes").value.split(/\s+/).filter(x=>/^ЦК3\./.test(x)).forEach(l=>{try{const o=JSON.parse(unb64(l.slice(4)));if(seen.has(o.id+o.e))return;seen.add(o.id+o.e);out.push(o)}catch(e){bad++}});
  ROWS=out;const gs=[...new Set(out.map(o=>String(o.g)))].sort();["#eg","#kg"].forEach((s,i)=>{const c=$(s).value;$(s).innerHTML=gs.map(g=>`<option${g===c?" selected":""}>${esc(g)}</option>`).join("");if(!c&&gs[i])$(s).value=gs[i]});
@@ -241,10 +240,10 @@ function chart(da,db,na,nb){const W=640,H=260,pl=44,pb=40,pt=20,cw=(W-pl-10)/4,p
  let s=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Розподіл за рівнями, %">`;for(let v=0;v<=mx;v+=10)s+=`<line x1="${pl}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E4ECE0"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="#5D6B60">${v}%</text>`;
  for(let i=0;i<4;i++){const x=pl+i*cw+cw*.17,bw=cw*.3;s+=`<rect x="${x}" y="${y(pa[i])}" width="${bw}" height="${H-pb-y(pa[i])}" rx="4" fill="#23A019"/><rect x="${x+bw+5}" y="${y(pq[i])}" width="${bw}" height="${H-pb-y(pq[i])}" rx="4" fill="#F2C14E"/><text x="${pl+i*cw+cw/2}" y="${H-pb+22}" text-anchor="middle" font-size="12" fill="#152117">${LVN[i+1]}</text>`}
  return s+`<rect x="${W-160}" y="4" width="12" height="12" rx="3" fill="#23A019"/><text x="${W-142}" y="14" font-size="12">ЕГ</text><rect x="${W-100}" y="4" width="12" height="12" rx="3" fill="#F2C14E"/><text x="${W-82}" y="14" font-size="12">КГ</text></svg></div>`}
-function bT(){$("#codes").oninput=parse;$("#an").onclick=analyze;if($("#ld"))$("#ld").onclick=async()=>{$("#pi").textContent="Завантаження…";try{const j=await (await fetch(ENDPOINT+"?key="+encodeURIComponent($("#key").value))).json();if(j.error){$("#pi").textContent="Неправильний ключ.";return}SRV=j.rows||[];analyze()}catch(e){$("#pi").textContent="Не вдалося завантажити відповіді."}}}
-
+function bT(){const go2=async()=>{if(!ENDPOINT)return;$("#pi").textContent="Завантаження…";try{const j=await (await fetch(ENDPOINT+"?key="+encodeURIComponent($("#key").value))).json();if(j.error){$("#pi").textContent="Неправильний пароль.";return}SRV=j.rows||[];$("#sel").hidden=false;try{sessionStorage.setItem("ak",$("#key").value)}catch(e){}analyze();["#eg","#kg"].forEach(x=>$(x).onchange=analyze)}catch(e){$("#pi").textContent="Не вдалося завантажити відповіді."}};
+ $("#ld").onclick=go2;$("#key").onkeydown=e=>{if(e.key==="Enter")go2()};try{const k=sessionStorage.getItem("ak");if(k){$("#key").value=k;go2()}}catch(e){}}
 const V=[[v0,b0],[v1,b1],[v2,b2],[v3,b3],[v4,b4],[v5,b5],[v6,b6]];
-function render(){if(location.hash==="#teacher"){$("#app").innerHTML=vT();bT();return}$("#app").innerHTML=V[S.step][0]();V[S.step][1]()}
+function render(){if(location.hash==="#results"){$("#app").innerHTML=vT();bT();return}$("#app").innerHTML=V[S.step][0]();V[S.step][1]()}
 addEventListener("hashchange",render);load();render();
 </script>
 </body>
