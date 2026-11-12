@@ -151,7 +151,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px}
   </header>
   <div id="prog" hidden><div class="track"><div class="soil"></div><div class="grown" id="grown"></div><img id="trac" src="logo.png" alt=""></div><div class="tcount"><span id="ptag"></span><span id="pnum"></span></div></div>
   <main id="app"></main>
-  <footer>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · Фото: відкриті фотобанки</footer>
+  <footer>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · Фото: відкриті фотобанки<br><a href="#results" style="color:var(--muted);opacity:.7;font-size:11.5px;text-decoration:none">вхід для засновника</a></footer>
 </div>
 <canvas id="fx" hidden></canvas>
 <script>
@@ -207,13 +207,13 @@ function go(n){S.dir=n>S.step?1:-1;S.step=n;save();render();scrollTo({top:0,beha
 
 /* ---- старт ---- */
 const DONEKEY="agro-op-done";
-const isDone=()=>{try{return localStorage.getItem(DONEKEY)==="1"}catch(e){return false}};
+const isDone=()=>false;
 function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>15 запитань</span><span>4 хвилини</span><span>анонімно</span></div>
  <h1>Цифрові технології <em>в аграрній освіті</em></h1><p>Анонімне опитування студентів про використання цифрових технологій у навчанні та майбутній професійній діяльності. Правильних чи неправильних відповідей немає - важлива лише твоя думка.</p></div></section>
  <section class="card"><div class="body">
   <div class="grid2"><div class="f"><label class="lbl" for="age">Твій вік</label><input type="number" id="age" min="14" max="60" inputmode="numeric" placeholder="наприклад, 17" value="${esc(S.age)}" style="font:inherit;font-size:18px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#FAFCF8;width:100%"></div>
   <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div></div>
-  <p class="err" id="e"></p><div class="nav"><span class="hint">Ім’я не потрібне. Пройти можна один раз.</span><button class="btn go" id="next">Почати</button></div></div></section>`}
+  <p class="err" id="e"></p><div class="nav"><span class="hint">Ім’я не потрібне. Відповіді анонімні.</span><button class="btn go" id="next">Почати</button></div></div></section>`}
 function bStart(){
  $$("[data-sex]").forEach(b=>b.onclick=()=>{S.sex=b.dataset.sex;$$("[data-sex]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
  $("#next").onclick=()=>{const ag=parseInt($("#age").value,10);if(!ag||ag<14||ag>60){$("#e").textContent="Вкажи свій вік числом.";return}if(!S.sex){$("#e").textContent="Обери стать.";return}
@@ -259,15 +259,15 @@ const LV=t=>t<=40?1:t<=60?2:t<=80?3:4,LVN=["","Низький","Середній
 function payload(R){return {v:5,id:S.id,g:URLG||"-",e:"В",age:S.age,sex:S.sex,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,a:S.a,min:Math.max(1,Math.round((S.done-S.t0)/60000))}}
 
 /* ---- фінал ---- */
-async function bDone(){grains();try{localStorage.setItem(DONEKEY,"1")}catch(e){}
- if(!ENDPOINT||S.sent===S.id)return;try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.id;save()}catch(e){}}
+async function bDone(){grains();const P=payload(calc());S.step=-1;S.a={};save();
+ if(!ENDPOINT)return;try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(P)})}catch(e){}}
 function grains(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const c=$("#fx");c.hidden=false;const g=c.getContext("2d"),W=c.width=innerWidth*devicePixelRatio,H=c.height=innerHeight*devicePixelRatio;
  const P=Array.from({length:90},()=>({x:Math.random()*W,y:-Math.random()*H*.6,vy:(2+Math.random()*3)*devicePixelRatio,vx:(Math.random()-.5)*1.5,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.15,s:(5+Math.random()*5)*devicePixelRatio,col:["#F2C14E","#E3A93A","#23A019","#8BD35C"][Math.floor(Math.random()*4)]}));
  const t0=performance.now();const step=t=>{g.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;g.save();g.translate(p.x,p.y);g.rotate(p.r);g.fillStyle=p.col;g.beginPath();g.ellipse(0,0,p.s*.45,p.s,0,0,7);g.fill();g.restore()});
   if(t-t0<3200)requestAnimationFrame(step);else{g.clearRect(0,0,W,H);c.hidden=true}};requestAnimationFrame(step)}
 
 /* ---- результати (закритий розділ #results) ---- */
-function vR(){return `<section class="card"><div class="body"><p class="hint" style="margin:0">Закритий розділ</p><h2>Результати опитування</h2>
+function vR(){return `<section class="card"><div class="body"><p class="hint" style="margin:0">Вхід для засновника</p><h2>Результати опитування</h2>
  <div class="grid2"><div class="f"><label class="lbl" for="key">Пароль</label><input type="password" id="key" autocomplete="current-password"></div><div class="f" style="justify-content:flex-end"><button class="btn go" id="ld">Увійти</button></div></div>
  <div id="sel" hidden><div class="grid2"><div class="f"><label class="lbl" for="eg">Експериментальна група</label><select id="eg"></select></div><div class="f"><label class="lbl" for="kg">Контрольна група</label><select id="kg"></select></div></div></div>
  <div class="nav"><span class="hint" id="pi">${ENDPOINT?"Введи пароль, щоб побачити відповіді.":"Збереження відповідей ще не налаштовано."}</span><a href="./" style="color:var(--leaf-d)">До опитування</a></div></div></section><div id="rep" style="display:flex;flex-direction:column;gap:18px"></div>`}
@@ -303,7 +303,7 @@ function bR(){const go2=async()=>{if(!ENDPOINT)return;$("#pi").textContent="За
 /* ---- рендер ---- */
 function render(){const res=location.hash==="#results";$("#prog").hidden=res||S.step<0||S.step>=Q.length||isDone();
  if(res){$("#app").innerHTML=vR();bR();return}
- if(isDone()||S.step>=Q.length){$("#app").innerHTML=vDone();if(S.step>=Q.length&&!isDone())bDone();return}
+ if(S.step>=Q.length){$("#app").innerHTML=vDone();bDone();return}
  if(S.step<0){$("#app").innerHTML=vStart();bStart();return}
  const k=S.step/(Q.length-1);$("#grown").style.width=(k*100)+"%";$("#trac").style.left=`${k*100}%`;$("#ptag").textContent=Q[S.step].tag;$("#pnum").textContent=`${S.step+1} з ${Q.length}`;
  $("#app").innerHTML=vQ(S.step);bQ(S.step)}
