@@ -204,7 +204,7 @@ function go(n){S.dir=n>S.step?1:-1;S.step=n;save();render();scrollTo({top:0,beha
 
 /* ---- старт ---- */
 function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>12 запитань</span><span>3 хвилини</span><span>без імені</span></div>
- <h1>Як <em>цифра</em> змінює поле - і що думаєш ти?</h1><p>Коротке опитування про цифрові технології в навчанні й майбутній роботі. Тут немає правильних чи неправильних відповідей.</p></div></section>
+ <h1>Цифра змінює поле. <em>А що думаєш ти?</em></h1><p>Коротке опитування про цифрові технології в навчанні й майбутній роботі. Тут немає правильних чи неправильних відповідей.</p></div></section>
  <section class="card"><div class="body">
   <div class="f"><span class="lbl">Твій вік</span><div class="tiles" style="grid-template-columns:repeat(5,1fr)">${AGES.map(a=>`<button class="tile chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join("")}</div></div>
   <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div>
