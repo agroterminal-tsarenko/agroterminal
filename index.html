@@ -9,13 +9,13 @@
 <meta property="og:image" content="img/hero.jpg">
 <link rel="icon" href="logo.png">
 <link rel="preload" as="image" href="img/hero.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap">
 <style>
 /* Макет: одна "картка-кадр" на питання - фото поля зверху, питання і великі плитки відповідей знизу; прогрес - трактор, що їде полем */
 :root{
   --leaf:#23A019;--leaf-d:#166F0F;--leaf-dd:#0F3A0C;--sprout:#EAF7E5;--wheat:#F2C14E;--wheat-l:#FCF4DE;--sky:#EEF5F8;
   --ink:#142017;--muted:#5C6A5F;--line:#E0E9DB;--paper:#FFFFFF;--bg:#F4F7F1;--bad:#B9381F;
-  --h:"Unbounded","Golos Text",Arial,sans-serif;--b:"Golos Text","Segoe UI",Arial,sans-serif;
+  --h:"Montserrat Alternates","Nunito",Arial,sans-serif;--b:"Nunito","Segoe UI",Arial,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -151,7 +151,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px}
   </header>
   <div id="prog" hidden><div class="track"><div class="soil"></div><div class="grown" id="grown"></div><img id="trac" src="logo.png" alt=""></div><div class="tcount"><span id="ptag"></span><span id="pnum"></span></div></div>
   <main id="app"></main>
-  <footer>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · Фото: Unsplash, Pexels</footer>
+  <footer>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · Фото: відкриті фотобанки</footer>
 </div>
 <canvas id="fx" hidden></canvas>
 <script>
@@ -176,20 +176,20 @@ const IC={
 const svg=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.ok}</svg>`;
 
 const Q=[
- {id:"q1",img:"q6",tag:"Майбутня професія",type:"scale",t:"Наскільки цифрові технології знадобляться тобі в майбутній професії?",lo:"Зовсім не знадобляться",hi:"Без них нікуди",words:["","Зовсім ні","Майже ні","Мало","Трохи","Частково","Помірно","Досить","Сильно","Дуже","Без них нікуди"]},
+ {id:"q1",img:"u1",tag:"Майбутня професія",type:"scale",t:"Наскільки цифрові технології знадобляться тобі в майбутній професії?",lo:"Зовсім не знадобляться",hi:"Без них нікуди",words:["","Зовсім ні","Майже ні","Мало","Трохи","Частково","Помірно","Досить","Сильно","Дуже","Без них нікуди"]},
  {id:"q2",img:"q1",tag:"Майбутня професія",type:"choice",t:"Хотів би ти працювати на сучасній техніці з автопілотом і бортовим комп’ютером?",o:[["Так, це моє",6,"thumb"],["Можливо, якщо навчать",4,"maybe"],["Мені байдуже",1,"meh"],["Ні, краще по-старому",0,"x"]]},
  {id:"q3",img:"q4",tag:"Натхнення",type:"choice",t:"Що найбільше надихає тебе в сучасному сільському господарстві?",o:[["Розумна техніка",4,"tablet"],["Дрони й супутники",4,"drone"],["Економія та екологічність",4,"coin"],["Поки нічого",0,"meh"]]},
  {id:"q4",img:"q9",tag:"Натхнення",type:"scale",t:"Наскільки тобі цікаво дізнаватися про нові агротехнології?",lo:"Зовсім не цікаво",hi:"Дуже цікаво",words:["","Зовсім ні","Майже ні","Слабко","Трохи","Помірно","Цікаво","Досить цікаво","Дуже цікаво","Захоплює","Обожнюю це"]},
  {id:"q5",img:"q12",tag:"Цифрове поле",type:"multi",t:"Про які технології в агросфері ти вже чув?",s:"Можна обрати кілька",o:[["GPS-навігація й автопілот",2,"gps"],["Дрони для обприскування",2,"drone"],["Супутниковий моніторинг полів",2,"sat"],["Датчики вологості ґрунту",2,"chart"],["Роботи на фермах",2,"spark"],["Ні про що з цього",0,"x",1]]},
- {id:"q6",img:"q3",tag:"Цифрове поле",type:"choice",t:"Чи знаєш ти, що таке «точне землеробство»?",o:[["Так, можу пояснити іншим",15,"star"],["Приблизно уявляю",10,"ok"],["Чув, але не знаю, що це",5,"maybe"],["Чую вперше",0,"x"]]},
- {id:"q7",img:"q7",tag:"Цифрове поле",type:"choice",t:"Звідки ти найчастіше дізнаєшся про нову агротехніку?",o:[["YouTube, TikTok, Instagram",0,"video"],["Від викладачів і майстрів",0,"book"],["На практиці в господарстві",0,"hands"],["Майже не цікавлюся",0,"meh"]]},
- {id:"q8",img:"q8",tag:"Навчання",type:"choice",t:"Як часто на заняттях ви працюєте з комп’ютером, смартфоном чи онлайн-сервісами?",o:[["Майже на кожному занятті",7,"laptop"],["Кілька разів на тиждень",5,"cal"],["Зрідка",2,"phone"],["Майже ніколи",0,"moon"]]},
- {id:"q9",img:"q13",tag:"Твої вміння",type:"matrix",t:"Наскільки впевнено ти можеш…",rows:["Знайти потрібну інформацію в інтернеті й перевірити, чи їй можна вірити","Працювати з документами і таблицями","Здавати завдання й спілкуватися онлайн (Classroom, Meet)","Захистити свій акаунт від зламу"],cols:["Ще ні","З допомогою","Легко"],pts:[0,2,3.5]},
+ {id:"q6",img:"u6",tag:"Цифрове поле",type:"choice",t:"Чи знаєш ти, що таке «точне землеробство»?",o:[["Так, можу пояснити іншим",15,"star"],["Приблизно уявляю",10,"ok"],["Чув, але не знаю, що це",5,"maybe"],["Чую вперше",0,"x"]]},
+ {id:"q7",img:"u7",tag:"Цифрове поле",type:"choice",t:"Звідки ти найчастіше дізнаєшся про нову агротехніку?",o:[["YouTube, TikTok, Instagram",0,"video"],["Від викладачів і майстрів",0,"book"],["На практиці в господарстві",0,"hands"],["Майже не цікавлюся",0,"meh"]]},
+ {id:"q8",img:"u8",tag:"Навчання",type:"choice",t:"Як часто на заняттях ви працюєте з комп’ютером, смартфоном чи онлайн-сервісами?",o:[["Майже на кожному занятті",7,"laptop"],["Кілька разів на тиждень",5,"cal"],["Зрідка",2,"phone"],["Майже ніколи",0,"moon"]]},
+ {id:"q9",img:"u9",tag:"Твої вміння",type:"matrix",t:"Наскільки впевнено ти можеш…",rows:["Знайти потрібну інформацію в інтернеті й перевірити, чи їй можна вірити","Працювати з документами і таблицями","Здавати завдання й спілкуватися онлайн (Classroom, Meet)","Захистити свій акаунт від зламу"],cols:["Ще ні","З допомогою","Легко"],pts:[0,2,3.5]},
  {id:"q10",img:"q2",tag:"Навчання",type:"choice",t:"Чи працював ти на навчанні з тренажером, симулятором або 3D-моделлю техніки?",o:[["Так, неодноразово",4,"game"],["Кілька разів",2,"rep"],["Ні, але дуже хотів би",1,"spark"],["Ні",0,"x"]]},
  {id:"q11",img:"q10",tag:"Навчання",type:"choice",t:"Чи вистачає тобі сучасних цифрових технологій у навчанні?",o:[["Так, цілком",0,"ok"],["Загалом так, але хочеться більше",0,"half"],["Замало",0,"down"],["Майже немає",0,"x"]]},
- {id:"q12",img:"q11",tag:"Навчання",type:"choice",t:"Яке заняття тобі було б найцікавішим?",o:[["Коротке відео + практика",0,"video"],["Робота з майстром на техніці",0,"hands"],["Гра-квест або змагання",0,"game"],["Тренажер чи VR-симулятор",0,"tablet"]]},
- {id:"q13",img:"q14",tag:"Самооцінка",type:"scale",t:"Як ти сам оцінюєш свої цифрові вміння?",lo:"Слабо",hi:"Дуже впевнено",words:["","Дуже слабо","Слабо","Слабувато","Нижче середнього","Середньо","Трохи вище середнього","Непогано","Добре","Дуже добре","Впевнено, як профі"]},
- {id:"q14",img:"q5",tag:"Самооцінка",type:"multi",t:"Що б ти хотів покращити у своїх цифрових уміннях?",s:"Можна обрати кілька",o:[["Розуміти електроніку й GPS техніки",1,"gps"],["Працювати з таблицями й документами",1,"doc"],["Безпеку в інтернеті",1,"shield"],["Швидко знаходити потрібну інформацію",1,"search"],["Нічого, все вмію",0,"ok",1]]},
+ {id:"q12",img:"u12",tag:"Навчання",type:"choice",t:"Яке заняття тобі було б найцікавішим?",o:[["Коротке відео + практика",0,"video"],["Робота з майстром на техніці",0,"hands"],["Гра-квест або змагання",0,"game"],["Тренажер чи VR-симулятор",0,"tablet"]]},
+ {id:"q13",img:"u13",tag:"Самооцінка",type:"scale",t:"Як ти сам оцінюєш свої цифрові вміння?",lo:"Слабо",hi:"Дуже впевнено",words:["","Дуже слабо","Слабо","Слабувато","Нижче середнього","Середньо","Трохи вище середнього","Непогано","Добре","Дуже добре","Впевнено, як профі"]},
+ {id:"q14",img:"u14",tag:"Самооцінка",type:"multi",t:"Що б ти хотів покращити у своїх цифрових уміннях?",s:"Можна обрати кілька",o:[["Розуміти електроніку й GPS техніки",1,"gps"],["Працювати з таблицями й документами",1,"doc"],["Безпеку в інтернеті",1,"shield"],["Швидко знаходити потрібну інформацію",1,"search"],["Нічого, все вмію",0,"ok",1]]},
  {id:"q15",img:"q15",tag:"Саморозвиток",type:"choice",t:"Чи вчишся ти чогось нового самостійно - з відео, курсів, застосунків?",o:[["Так, регулярно",10,"rep"],["Іноді",7,"half"],["Рідко",3,"down"],["Ні",0,"x"]]}
 ];
 const AGEB=["до 16","17","18","19-20","21+"],SEX=["Чоловіча","Жіноча","Не вказувати"];const ageB=a=>{a=+a;return a<=16?"до 16":a===17?"17":a===18?"18":a<=20?"19-20":"21+"};
@@ -209,7 +209,7 @@ function go(n){S.dir=n>S.step?1:-1;S.step=n;save();render();scrollTo({top:0,beha
 const DONEKEY="agro-op-done";
 const isDone=()=>{try{return localStorage.getItem(DONEKEY)==="1"}catch(e){return false}};
 function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>15 запитань</span><span>4 хвилини</span><span>анонімно</span></div>
- <h1>Цифра змінює поле. <em>А що думаєш ти?</em></h1><p>Коротке опитування про цифрові технології в навчанні й майбутній професії. Тут немає правильних чи неправильних відповідей - важлива лише твоя думка.</p></div></section>
+ <h1>Цифрові технології <em>в аграрній освіті</em></h1><p>Анонімне опитування студентів про використання цифрових технологій у навчанні та майбутній професійній діяльності. Правильних чи неправильних відповідей немає - важлива лише твоя думка.</p></div></section>
  <section class="card"><div class="body">
   <div class="grid2"><div class="f"><label class="lbl" for="age">Твій вік</label><input type="number" id="age" min="14" max="60" inputmode="numeric" placeholder="наприклад, 17" value="${esc(S.age)}" style="font:inherit;font-size:18px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#FAFCF8;width:100%"></div>
   <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div></div>
@@ -218,9 +218,9 @@ function bStart(){
  $$("[data-sex]").forEach(b=>b.onclick=()=>{S.sex=b.dataset.sex;$$("[data-sex]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
  $("#next").onclick=()=>{const ag=parseInt($("#age").value,10);if(!ag||ag<14||ag>60){$("#e").textContent="Вкажи свій вік числом.";return}if(!S.sex){$("#e").textContent="Обери стать.";return}
   S.age=String(ag);S.stage="В";S.id=newId()+"-"+Date.now().toString(36).slice(-4);S.t0=Date.now();S.a={};S.sent=null;go(0)}}
-function vDone(){return `<section class="card enter"><div class="qimg" style="aspect-ratio:16/8"><img src="img/hero.jpg" alt=""></div><div class="body" style="text-align:center;align-items:center;gap:14px;padding-block:34px">
+function vDone(){return `<section class="card enter"><div class="qimg" style="aspect-ratio:16/8"><img src="img/uend.jpg" alt=""></div><div class="body" style="text-align:center;align-items:center;gap:14px;padding-block:34px">
  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23A019" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
- <h2 style="font-size:28px">Дякуємо за пройдене опитування!</h2><p style="margin:0;color:var(--muted);max-width:46ch">Твої відповіді допоможуть зробити навчання майбутніх аграріїв сучаснішим і цікавішим. Гарного дня і щедрого врожаю!</p><div id="sb"></div></div></section>`}
+ <h2 style="font-size:28px">Дякую за пройдене опитування!</h2><p style="margin:0;color:var(--muted);max-width:46ch">Твої відповіді допоможуть зробити навчання майбутніх аграріїв сучаснішим і цікавішим. Гарного дня!</p><div id="sb"></div></div></section>`}
 /* ---- питання ---- */
 function vQ(i){const q=Q[i],a=S.a[q.id];let ui="";
  if(q.type==="scale"){const v=a??5;ui=`<div class="scale"><div class="bignum"><b id="sv">${v}</b><span id="sw">${q.words[v]}</span></div><input type="range" id="rg" min="1" max="10" step="1" value="${v}" style="--p:${(v-1)/9*100}%" aria-label="${esc(q.t)}"><div class="ends"><span>${q.lo}</span><span>${q.hi}</span></div></div>`}
