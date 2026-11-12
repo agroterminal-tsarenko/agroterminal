@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>АгроПульс</title>
-<meta name="description" content="АгроПульс - анонімний опитувальник для студентів-аграріїв про цифрові технології в навчанні й роботі">
-<meta property="og:title" content="АгроПульс - анонімне опитування">
+<title>Агро Опитувальник</title>
+<meta name="description" content="Агро Опитувальник - анонімне опитування для студентів-аграріїв про цифрові технології в навчанні й майбутній професії">
+<meta property="og:title" content="Агро Опитувальник">
 <meta property="og:image" content="img/hero.jpg">
 <link rel="icon" href="logo.png">
 <link rel="preload" as="image" href="img/hero.jpg">
@@ -146,7 +146,7 @@ footer{text-align:center;color:var(--muted);font-size:12.5px}
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="./"><img src="logo.png" alt="Логотип АгроПульс"><div><b>Агро<span>Пульс</span></b><small>опитувальник для студентів-аграріїв</small></div></a>
+    <a class="brand" href="./"><img src="logo.png" alt="Логотип Агро Опитувальника"><div><b>Агро <span>Опитувальник</span></b><small>для студентів-аграріїв</small></div></a>
     <span class="anon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Анонімно</span>
   </header>
   <div id="prog" hidden><div class="track"><div class="soil"></div><div class="grown" id="grown"></div><img id="trac" src="logo.png" alt=""></div><div class="tcount"><span id="ptag"></span><span id="pnum"></span></div></div>
@@ -176,20 +176,23 @@ const IC={
 const svg=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.ok}</svg>`;
 
 const Q=[
- {id:"q1",img:"q1",tag:"Майбутня робота",c:"M",type:"scale",t:"Наскільки цифрові технології знадобляться тобі в майбутній роботі?",lo:"Зовсім не знадобляться",hi:"Без них нікуди",words:["","Зовсім ні","Майже ні","Мало","Трохи","Частково","Помірно","Досить","Сильно","Дуже","Без них нікуди"]},
- {id:"q2",img:"q2",tag:"Навчання",c:"D",type:"choice",t:"Як часто на заняттях ви працюєте з комп’ютером, смартфоном чи онлайн-сервісами?",o:[["Майже на кожному занятті",9,"laptop"],["Кілька разів на тиждень",6,"cal"],["Зрідка",3,"phone"],["Майже ніколи",0,"moon"]]},
- {id:"q3",img:"q3",tag:"Навчання",c:null,type:"choice",t:"Чи вистачає тобі сучасних інформаційних технологій у навчанні?",o:[["Так, цілком",3,"ok"],["Загалом так, але хочеться більше",2,"half"],["Замало",1,"down"],["Майже немає",0,"x"]]},
- {id:"q4",img:"q4",tag:"Цифрове поле",c:"C",type:"multi",t:"Що з цього ти вже бачив наживо або пробував?",s:"Можна обрати кілька",o:[["GPS-автопілот трактора",2,"gps"],["Дрон над полем",2,"drone"],["Бортовий термінал у кабіні",2,"tablet"],["Супутникова карта поля",2,"sat"],["Облік робіт у застосунку",2,"chart"],["Нічого з цього",0,"x",1]]},
- {id:"q5",img:"q5",tag:"Цифрове поле",c:"C",type:"choice",t:"Як добре ти розумієш, як трактор сам їде рівно по GPS?",o:[["Можу пояснити іншим",15,"star"],["Розумію в загальних рисах",10,"ok"],["Чув, але як працює - не знаю",5,"maybe"],["Вперше про таке чую",0,"x"]]},
- {id:"q6",img:"q6",tag:"Твої вміння",c:"D",type:"matrix",t:"Наскільки впевнено ти можеш…",rows:["Знайти інструкцію або відео, як усунути несправність","Скласти просту таблицю обліку на телефоні чи комп’ютері","Надіслати агроному фото й короткий звіт у робочий чат","Розпізнати шахрайське повідомлення"],cols:["Ще ні","З допомогою","Легко"],pts:[0,2,4]},
- {id:"q7",img:"q7",tag:"Агротехніка",c:"M",type:"choice",t:"Що тебе найбільше чіпляє в сучасній агротехніці?",o:[["Точність і економія",5,"coin"],["Комфорт у кабіні",5,"seat"],["Гаджети, екрани, дрони",5,"spark"],["Нічого особливого",0,"meh"]]},
- {id:"q8",img:"q8",tag:"Агротехніка",c:"M",type:"choice",t:"Хотів би ти працювати на техніці з автопілотом?",o:[["Так, це круто",10,"thumb"],["Можливо, якщо навчать",6,"maybe"],["Мені байдуже",2,"meh"],["Ні",0,"x"]]},
- {id:"q9",img:"q9",tag:"Самооцінка",c:"R",type:"scale",t:"Як ти сам оцінюєш свої цифрові вміння?",lo:"Слабо",hi:"Дуже впевнено",words:["","Дуже слабо","Слабо","Слабувато","Нижче середнього","Середньо","Трохи вище середнього","Непогано","Добре","Дуже добре","Впевнено, як профі"]},
- {id:"q10",img:"q10",tag:"Самооцінка",c:"R",type:"multi",t:"Що тобі найбільше варто підтягнути?",s:"Можна обрати кілька",o:[["Знання про електроніку і GPS техніки",1,"gps"],["Таблиці та документи",1,"doc"],["Безпеку в інтернеті",1,"shield"],["Пошук потрібної інформації",1,"search"],["Мені нічого не треба",0,"ok",1]]},
- {id:"q11",img:"q11",tag:"Як тобі зручніше",c:null,type:"choice",t:"Як тобі найзручніше опановувати щось нове?",o:[["Коротке відео",0,"video"],["Практика з майстром",0,"hands"],["Покрокова інструкція",0,"list"],["Гра чи тренажер",0,"game"]]},
- {id:"q12",img:"q12",tag:"Саморозвиток",c:"R",type:"choice",t:"Чи вчишся ти чогось цифрового сам - з відео, курсів, застосунків?",o:[["Так, регулярно",10,"rep"],["Іноді",7,"half"],["Рідко",3,"down"],["Ні",0,"x"]]}
+ {id:"q1",img:"q6",tag:"Майбутня професія",type:"scale",t:"Наскільки цифрові технології знадобляться тобі в майбутній професії?",lo:"Зовсім не знадобляться",hi:"Без них нікуди",words:["","Зовсім ні","Майже ні","Мало","Трохи","Частково","Помірно","Досить","Сильно","Дуже","Без них нікуди"]},
+ {id:"q2",img:"q1",tag:"Майбутня професія",type:"choice",t:"Хотів би ти працювати на сучасній техніці з автопілотом і бортовим комп’ютером?",o:[["Так, це моє",6,"thumb"],["Можливо, якщо навчать",4,"maybe"],["Мені байдуже",1,"meh"],["Ні, краще по-старому",0,"x"]]},
+ {id:"q3",img:"q4",tag:"Натхнення",type:"choice",t:"Що найбільше надихає тебе в сучасному сільському господарстві?",o:[["Розумна техніка",4,"tablet"],["Дрони й супутники",4,"drone"],["Економія та екологічність",4,"coin"],["Поки нічого",0,"meh"]]},
+ {id:"q4",img:"q9",tag:"Натхнення",type:"scale",t:"Наскільки тобі цікаво дізнаватися про нові агротехнології?",lo:"Зовсім не цікаво",hi:"Дуже цікаво",words:["","Зовсім ні","Майже ні","Слабко","Трохи","Помірно","Цікаво","Досить цікаво","Дуже цікаво","Захоплює","Обожнюю це"]},
+ {id:"q5",img:"q12",tag:"Цифрове поле",type:"multi",t:"Про які технології в агросфері ти вже чув?",s:"Можна обрати кілька",o:[["GPS-навігація й автопілот",2,"gps"],["Дрони для обприскування",2,"drone"],["Супутниковий моніторинг полів",2,"sat"],["Датчики вологості ґрунту",2,"chart"],["Роботи на фермах",2,"spark"],["Ні про що з цього",0,"x",1]]},
+ {id:"q6",img:"q3",tag:"Цифрове поле",type:"choice",t:"Чи знаєш ти, що таке «точне землеробство»?",o:[["Так, можу пояснити іншим",15,"star"],["Приблизно уявляю",10,"ok"],["Чув, але не знаю, що це",5,"maybe"],["Чую вперше",0,"x"]]},
+ {id:"q7",img:"q7",tag:"Цифрове поле",type:"choice",t:"Звідки ти найчастіше дізнаєшся про нову агротехніку?",o:[["YouTube, TikTok, Instagram",0,"video"],["Від викладачів і майстрів",0,"book"],["На практиці в господарстві",0,"hands"],["Майже не цікавлюся",0,"meh"]]},
+ {id:"q8",img:"q8",tag:"Навчання",type:"choice",t:"Як часто на заняттях ви працюєте з комп’ютером, смартфоном чи онлайн-сервісами?",o:[["Майже на кожному занятті",7,"laptop"],["Кілька разів на тиждень",5,"cal"],["Зрідка",2,"phone"],["Майже ніколи",0,"moon"]]},
+ {id:"q9",img:"q13",tag:"Твої вміння",type:"matrix",t:"Наскільки впевнено ти можеш…",rows:["Знайти потрібну інформацію в інтернеті й перевірити, чи їй можна вірити","Працювати з документами і таблицями","Здавати завдання й спілкуватися онлайн (Classroom, Meet)","Захистити свій акаунт від зламу"],cols:["Ще ні","З допомогою","Легко"],pts:[0,2,3.5]},
+ {id:"q10",img:"q2",tag:"Навчання",type:"choice",t:"Чи працював ти на навчанні з тренажером, симулятором або 3D-моделлю техніки?",o:[["Так, неодноразово",4,"game"],["Кілька разів",2,"rep"],["Ні, але дуже хотів би",1,"spark"],["Ні",0,"x"]]},
+ {id:"q11",img:"q10",tag:"Навчання",type:"choice",t:"Чи вистачає тобі сучасних цифрових технологій у навчанні?",o:[["Так, цілком",0,"ok"],["Загалом так, але хочеться більше",0,"half"],["Замало",0,"down"],["Майже немає",0,"x"]]},
+ {id:"q12",img:"q11",tag:"Навчання",type:"choice",t:"Яке заняття тобі було б найцікавішим?",o:[["Коротке відео + практика",0,"video"],["Робота з майстром на техніці",0,"hands"],["Гра-квест або змагання",0,"game"],["Тренажер чи VR-симулятор",0,"tablet"]]},
+ {id:"q13",img:"q14",tag:"Самооцінка",type:"scale",t:"Як ти сам оцінюєш свої цифрові вміння?",lo:"Слабо",hi:"Дуже впевнено",words:["","Дуже слабо","Слабо","Слабувато","Нижче середнього","Середньо","Трохи вище середнього","Непогано","Добре","Дуже добре","Впевнено, як профі"]},
+ {id:"q14",img:"q5",tag:"Самооцінка",type:"multi",t:"Що б ти хотів покращити у своїх цифрових уміннях?",s:"Можна обрати кілька",o:[["Розуміти електроніку й GPS техніки",1,"gps"],["Працювати з таблицями й документами",1,"doc"],["Безпеку в інтернеті",1,"shield"],["Швидко знаходити потрібну інформацію",1,"search"],["Нічого, все вмію",0,"ok",1]]},
+ {id:"q15",img:"q15",tag:"Саморозвиток",type:"choice",t:"Чи вчишся ти чогось нового самостійно - з відео, курсів, застосунків?",o:[["Так, регулярно",10,"rep"],["Іноді",7,"half"],["Рідко",3,"down"],["Ні",0,"x"]]}
 ];
-const AGES=["15-16","17","18","19-20","21+"],SEX=["Чоловіча","Жіноча","Не вказувати"];
+const AGEB=["до 16","17","18","19-20","21+"],SEX=["Чоловіча","Жіноча","Не вказувати"];const ageB=a=>{a=+a;return a<=16?"до 16":a===17?"17":a===18?"18":a<=20?"19-20":"21+"};
 const WORDS=["ЖИТО","ОВЕС","ЛЬОН","ПРОСО","ГРЕЧКА","РІПАК","СОЯ","ЯЧМІНЬ","ПШЕНИЦЯ","СОНЯШНИК","ГОРОХ","КУКУРУДЗА"];
 const URLG=(new URLSearchParams(location.search).get("g")||"").slice(0,20);
 
@@ -203,21 +206,21 @@ const newId=()=>WORDS[Math.floor(Math.random()*WORDS.length)]+"-"+(100+Math.floo
 function go(n){S.dir=n>S.step?1:-1;S.step=n;save();render();scrollTo({top:0,behavior:"smooth"})}
 
 /* ---- старт ---- */
-function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>12 запитань</span><span>3 хвилини</span><span>без імені</span></div>
- <h1>Цифра змінює поле. <em>А що думаєш ти?</em></h1><p>Коротке опитування про цифрові технології в навчанні й майбутній роботі. Тут немає правильних чи неправильних відповідей.</p></div></section>
+const DONEKEY="agro-op-done";
+const isDone=()=>{try{return localStorage.getItem(DONEKEY)==="1"}catch(e){return false}};
+function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>15 запитань</span><span>4 хвилини</span><span>анонімно</span></div>
+ <h1>Цифра змінює поле. <em>А що думаєш ти?</em></h1><p>Коротке опитування про цифрові технології в навчанні й майбутній професії. Тут немає правильних чи неправильних відповідей - важлива лише твоя думка.</p></div></section>
  <section class="card"><div class="body">
-  <div class="f"><span class="lbl">Твій вік</span><div class="tiles" style="grid-template-columns:repeat(5,1fr)">${AGES.map(a=>`<button class="tile chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join("")}</div></div>
-  <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div>
-  <label class="hint" style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="rep"${S.stage==="П"?" checked":""}> Я вже проходив це опитування раніше</label>
-  <div class="f" id="iw"${S.stage==="П"?"":" hidden"}><span class="lbl">Твій код з минулого разу (якщо зберіг)</span><input type="text" id="pid" placeholder="наприклад, ОВЕС-274" style="font:inherit;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#FAFCF8"></div>
-  <p class="err" id="e"></p><div class="nav"><span class="hint">Ми не питаємо ім’я. Відповіді анонімні.</span><button class="btn go" id="next">Почати</button></div></div></section>`}
+  <div class="grid2"><div class="f"><label class="lbl" for="age">Твій вік</label><input type="number" id="age" min="14" max="60" inputmode="numeric" placeholder="наприклад, 17" value="${esc(S.age)}" style="font:inherit;font-size:18px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#FAFCF8;width:100%"></div>
+  <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div></div>
+  <p class="err" id="e"></p><div class="nav"><span class="hint">Ім’я не потрібне. Пройти можна один раз.</span><button class="btn go" id="next">Почати</button></div></div></section>`}
 function bStart(){
- $$("[data-age]").forEach(b=>b.onclick=()=>{S.age=b.dataset.age;$$("[data-age]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
  $$("[data-sex]").forEach(b=>b.onclick=()=>{S.sex=b.dataset.sex;$$("[data-sex]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
- $("#rep").onchange=e=>{$("#iw").hidden=!e.target.checked};
- $("#next").onclick=()=>{if(!S.age||!S.sex){$("#e").textContent="Обери вік і стать - це займе секунду.";return}
-  S.stage=$("#rep").checked?"П":"В";const p=($("#pid").value||"").trim().toUpperCase();S.id=S.stage==="П"&&p?p:newId();S.t0=Date.now();S.a={};S.sent=null;go(0)}}
-
+ $("#next").onclick=()=>{const ag=parseInt($("#age").value,10);if(!ag||ag<14||ag>60){$("#e").textContent="Вкажи свій вік числом.";return}if(!S.sex){$("#e").textContent="Обери стать.";return}
+  S.age=String(ag);S.stage="В";S.id=newId()+"-"+Date.now().toString(36).slice(-4);S.t0=Date.now();S.a={};S.sent=null;go(0)}}
+function vDone(){return `<section class="card enter"><div class="qimg" style="aspect-ratio:16/8"><img src="img/hero.jpg" alt=""></div><div class="body" style="text-align:center;align-items:center;gap:14px;padding-block:34px">
+ <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#23A019" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+ <h2 style="font-size:28px">Дякуємо за пройдене опитування!</h2><p style="margin:0;color:var(--muted);max-width:46ch">Твої відповіді допоможуть зробити навчання майбутніх аграріїв сучаснішим і цікавішим. Гарного дня і щедрого врожаю!</p><div id="sb"></div></div></section>`}
 /* ---- питання ---- */
 function vQ(i){const q=Q[i],a=S.a[q.id];let ui="";
  if(q.type==="scale"){const v=a??5;ui=`<div class="scale"><div class="bignum"><b id="sv">${v}</b><span id="sw">${q.words[v]}</span></div><input type="range" id="rg" min="1" max="10" step="1" value="${v}" style="--p:${(v-1)/9*100}%" aria-label="${esc(q.t)}"><div class="ends"><span>${q.lo}</span><span>${q.hi}</span></div></div>`}
@@ -242,38 +245,22 @@ function bQ(i){const q=Q[i];
  if(q.type==="matrix")$$(".seg button").forEach(b=>b.onclick=()=>{const r=+b.dataset.r,c=+b.dataset.c,v=S.a[q.id]||[];v[r]=c;S.a[q.id]=v;$$(`.seg button[data-r="${r}"]`).forEach(x=>x.setAttribute("aria-pressed",x===b));$("#e").textContent="";save()});
 }
 
-/* ---- підрахунок ---- */
+/* ---- підрахунок (лише для дослідника, студент балів не бачить) ---- */
 function calc(){const A=S.a,g=id=>Q.find(q=>q.id===id);
- const pt=(id)=>{const q=g(id),v=A[id];if(q.type==="choice")return q.o[v][1];if(q.type==="multi")return v.reduce((s,j)=>s+q.o[j][1],0);if(q.type==="matrix")return v.reduce((s,c)=>s+q.pts[c],0);return 0};
- const M=(A.q1-1)/9*10+pt("q7")+pt("q8");
- const C=Math.min(10,pt("q4"))+pt("q5");
- const D=pt("q2")+pt("q6");
- const self=(A.q9-1)/9,act=(C+D)/50,adq=10*Math.max(0,1-Math.abs(self-act)/.5);
- const need=(A.q10||[]).some(j=>!g("q10").o[j][3])?5:0;
- const R=adq+need+pt("q12");const r=x=>Math.round(x*10)/10;
- return {M:r(M),C:r(C),D:r(D),R:r(R),T:r(M+C+D+R),diff:r((self-act)*100)}}
+ const pt=(id)=>{const q=g(id),v=A[id];if(v==null)return 0;if(q.type==="choice")return q.o[v][1];if(q.type==="multi")return v.reduce((s,j)=>s+q.o[j][1],0);if(q.type==="matrix")return v.reduce((s,c)=>s+q.pts[c],0);return 0};
+ const M=(A.q1-1)/9*8+(A.q4-1)/9*7+pt("q2")+pt("q3");
+ const C=Math.min(10,pt("q5"))+pt("q6");
+ const D=pt("q8")+pt("q9")+pt("q10");
+ const self=(A.q13-1)/9,act=(C+D)/50,adq=10*Math.max(0,1-Math.abs(self-act)/.5);
+ const need=(A.q14||[]).some(j=>!g("q14").o[j][3])?5:0;
+ const R=adq+need+pt("q15");const r=x=>Math.round(x*10)/10;
+ return {M:r(M),C:r(C),D:r(D),R:r(R),T:r(M+C+D+R)}}
 const LV=t=>t<=40?1:t<=60?2:t<=80?3:4,LVN=["","Низький","Середній","Достатній","Високий"];
-const PERS=["","Агро-новачок","Цифровий практикант","Агротехнік нового покоління","Цифровий агроінженер"];
-const PTXT=["","Цифровий світ агротехніки для тебе ще попереду - і це нормально. Почни з коротких відео про GPS і дрони: це цікавіше, ніж здається.","Основа вже є. Спробуй частіше працювати з таблицями й застосунками на навчанні - і перейдеш на новий рівень.","Ти впевнено почуваєшся з цифровими технологіями. Ще трохи практики з реальною технікою - і будеш тим, до кого звертаються по допомогу.","Ти готовий до цифрового поля вже зараз. Діли досвідом з одногрупниками - це найкращий спосіб рости далі."];
-function payload(R){return {v:4,id:S.id,g:URLG||"-",e:S.stage,age:S.age,sex:S.sex,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,a:S.a,min:Math.max(1,Math.round((S.done-S.t0)/60000))}}
+function payload(R){return {v:5,id:S.id,g:URLG||"-",e:"В",age:S.age,sex:S.sex,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,a:S.a,min:Math.max(1,Math.round((S.done-S.t0)/60000))}}
 
 /* ---- фінал ---- */
-function vEnd(){const R=calc(),L=LV(R.T),C=2*Math.PI*70;S._R=R;
- const row=(n,v)=>`<div class="br"><span>${n}</span><div class="trk"><i data-w="${v/25*100}"></i></div><span class="num">${f1(v)}</span></div>`;
- const tip=R.diff>20?"Ти оцінюєш свої вміння трохи вище, ніж показали відповіді. Перевіряй себе на практиці.":R.diff<-20?"Ти вмієш більше, ніж думаєш - сміливіше!":"Твоя самооцінка збігається з відповідями - чудово.";
- return `<section class="card enter"><div class="body">
- <div class="res"><div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" stroke="#EEF3EB" stroke-width="14" fill="none"/><circle class="arc" id="arc" cx="80" cy="80" r="70" stroke="#23A019" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-R.T/100)}"/></svg><div><b id="tot">0</b><small>зі 100</small></div></div>
- <div style="display:flex;flex-direction:column;gap:10px"><p class="hint" style="margin:0">Твій профіль</p><p class="persona">${PERS[L]}</p><p style="margin:0;color:var(--muted)">${PTXT[L]}</p></div></div>
- <div class="bars">${row("Інтерес",R.M)}${row("Обізнаність",R.C)}${row("Вміння",R.D)}${row("Самоаналіз",R.R)}</div>
- <p class="hint" style="margin:0">${tip}</p><div id="sb"></div>
- <div class="box"><div><div class="hint">Твій анонімний код - знадобиться, якщо проходитимеш повторно</div><div class="idbox">${esc(S.id)}</div></div></div>
- <div class="nav"><span class="hint">Дякуємо, що відповів!</span><button class="btn" id="again">Пройти ще раз</button></div></div></section>`}
-async function bEnd(){$("#again").onclick=()=>{S.step=-1;S.a={};save();render()};
- requestAnimationFrame(()=>{const a=$("#arc");a.style.strokeDashoffset=a.dataset.off;$$(".trk i").forEach(i=>i.style.width=i.dataset.w+"%");
-  const T=S._R.T,t0=performance.now();const tick=t=>{const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);$("#tot").textContent=f1(T*e);if(k<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)});
- grains();
- const sb=$("#sb");if(!ENDPOINT||S.sent===S.id+S.done)return;
- try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.id+S.done;save();sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`}catch(e){}}
+async function bDone(){grains();try{localStorage.setItem(DONEKEY,"1")}catch(e){}
+ if(!ENDPOINT||S.sent===S.id)return;try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.id;save()}catch(e){}}
 function grains(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const c=$("#fx");c.hidden=false;const g=c.getContext("2d"),W=c.width=innerWidth*devicePixelRatio,H=c.height=innerHeight*devicePixelRatio;
  const P=Array.from({length:90},()=>({x:Math.random()*W,y:-Math.random()*H*.6,vy:(2+Math.random()*3)*devicePixelRatio,vx:(Math.random()-.5)*1.5,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.15,s:(5+Math.random()*5)*devicePixelRatio,col:["#F2C14E","#E3A93A","#23A019","#8BD35C"][Math.floor(Math.random()*4)]}));
  const t0=performance.now();const step=t=>{g.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;g.save();g.translate(p.x,p.y);g.rotate(p.r);g.fillStyle=p.col;g.beginPath();g.ellipse(0,0,p.s*.45,p.s,0,0,7);g.fill();g.restore()});
@@ -292,8 +279,8 @@ const CR={1:3.84,2:5.99,3:7.81},dist=r=>{const d=[0,0,0,0];r.forEach(x=>d[LV(x.T
 function cnt(rows,key){const m={};rows.forEach(r=>{m[r[key]]=(m[r[key]]||0)+1});return m}
 function analyze(){const R=$("#rep");if(!ROWS.length){R.innerHTML=`<div class="card"><div class="body"><p class="hint">Відповідей ще немає.</p></div></div>`;return}
  const gs=[...new Set(ROWS.map(o=>String(o.g)))].sort();["#eg","#kg"].forEach((s,i)=>{const c=$(s).value;$(s).innerHTML=gs.map(g=>`<option${g===c?" selected":""}>${esc(g)}</option>`).join("");if(!c&&gs[i])$(s).value=gs[i]});
- const eg=$("#eg").value,kg=$("#kg").value;let h=`<section class="card"><div class="body"><h2>Загалом</h2><div class="kpis"><div class="kpi"><b>${ROWS.length}</b><span>відповідей</span></div><div class="kpi"><b>${f1(mean(ROWS,"T"))}</b><span>середній бал</span></div><div class="kpi"><b>${ROWS.filter(r=>r.e==="П").length}</b><span>повторних</span></div><div class="kpi"><b>${gs.length}</b><span>груп</span></div></div>
- <div class="tbl"><table><tr><th>Вік</th>${AGES.map(a=>`<th>${a}</th>`).join("")}</tr><tr><td>Осіб</td>${AGES.map(a=>`<td>${cnt(ROWS,"age")[a]||0}</td>`).join("")}</tr></table></div>
+ const eg=$("#eg").value,kg=$("#kg").value;let h=`<section class="card"><div class="body"><h2>Загалом</h2><div class="kpis"><div class="kpi"><b>${ROWS.length}</b><span>відповідей</span></div><div class="kpi"><b>${f1(mean(ROWS,"T"))}</b><span>середній бал</span></div><div class="kpi"><b>${f1(mean(ROWS.map(r=>({x:+r.age})),"x"))}</b><span>середній вік</span></div><div class="kpi"><b>${gs.length}</b><span>груп</span></div></div>
+ <div class="tbl"><table><tr><th>Вік</th>${AGEB.map(a=>`<th>${a}</th>`).join("")}</tr><tr><td>Осіб</td>${AGEB.map(a=>`<td>${ROWS.filter(r=>ageB(r.age)===a).length}</td>`).join("")}</tr></table></div>
  <div class="tbl"><table><tr><th>Стать</th>${SEX.map(a=>`<th>${a}</th>`).join("")}</tr><tr><td>Осіб</td>${SEX.map(a=>`<td>${cnt(ROWS,"sex")[a]||0}</td>`).join("")}</tr></table></div></div></section>`;
  const tsv=[];
  ["В","П"].forEach(st=>{const A=ROWS.filter(r=>String(r.g)===eg&&r.e===st),B=ROWS.filter(r=>String(r.g)===kg&&r.e===st);if(!A.length&&!B.length)return;const da=dist(A),db=dist(B),nm=st==="В"?"Перше проходження (констатувальний етап)":"Повторне проходження (контрольний етап)";
@@ -314,13 +301,13 @@ function bR(){const go2=async()=>{if(!ENDPOINT)return;$("#pi").textContent="За
  $("#ld").onclick=go2;$("#key").onkeydown=e=>{if(e.key==="Enter")go2()};try{const k=sessionStorage.getItem("ak");if(k){$("#key").value=k;go2()}}catch(e){}}
 
 /* ---- рендер ---- */
-function render(){const res=location.hash==="#results";$("#prog").hidden=res||S.step<0||S.step>=Q.length;
+function render(){const res=location.hash==="#results";$("#prog").hidden=res||S.step<0||S.step>=Q.length||isDone();
  if(res){$("#app").innerHTML=vR();bR();return}
+ if(isDone()||S.step>=Q.length){$("#app").innerHTML=vDone();if(S.step>=Q.length&&!isDone())bDone();return}
  if(S.step<0){$("#app").innerHTML=vStart();bStart();return}
- if(S.step>=Q.length){$("#app").innerHTML=vEnd();bEnd();return}
- const k=S.step/(Q.length-1);$("#grown").style.width=(k*100)+"%";$("#trac").style.left=`calc(${k*100}% )`;$("#ptag").textContent=Q[S.step].tag;$("#pnum").textContent=`${S.step+1} з ${Q.length}`;
+ const k=S.step/(Q.length-1);$("#grown").style.width=(k*100)+"%";$("#trac").style.left=`${k*100}%`;$("#ptag").textContent=Q[S.step].tag;$("#pnum").textContent=`${S.step+1} з ${Q.length}`;
  $("#app").innerHTML=vQ(S.step);bQ(S.step)}
-addEventListener("hashchange",render);load();if(S.step>=Q.length)S.step=-1;render();
+addEventListener("hashchange",render);load();render();
 </script>
 </body>
 </html>
