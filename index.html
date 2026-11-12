@@ -3,94 +3,126 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>АгроТермінал</title>
-<meta name="description" content="Анонімне опитування про цифрову готовність майбутніх механізаторів">
+<title>АгроПульс</title>
+<meta name="description" content="АгроПульс - анонімний опитувальник для студентів-аграріїв про цифрові технології в навчанні й роботі">
+<meta property="og:title" content="АгроПульс - анонімне опитування">
+<meta property="og:image" content="img/hero.jpg">
 <link rel="icon" href="logo.png">
-<link rel="preload" as="image" href="field.jpg">
+<link rel="preload" as="image" href="img/hero.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
-/* Макет: фото-герой пшеничного поля, далі одна біла картка-крок; м'які зелені і пшеничні акценти */
+/* Макет: одна "картка-кадр" на питання - фото поля зверху, питання і великі плитки відповідей знизу; прогрес - трактор, що їде полем */
 :root{
-  --leaf:#23A019;--leaf-d:#17700F;--leaf-dd:#12350E;--sprout:#EAF7E6;--wheat:#F2C14E;--wheat-l:#FBF3DC;
-  --ink:#152117;--muted:#5D6B60;--line:#E1EADC;--paper:#FFFFFF;--bg:#F5F8F2;--bad:#B9381F;
+  --leaf:#23A019;--leaf-d:#166F0F;--leaf-dd:#0F3A0C;--sprout:#EAF7E5;--wheat:#F2C14E;--wheat-l:#FCF4DE;--sky:#EEF5F8;
+  --ink:#142017;--muted:#5C6A5F;--line:#E0E9DB;--paper:#FFFFFF;--bg:#F4F7F1;--bad:#B9381F;
   --h:"Unbounded","Golos Text",Arial,sans-serif;--b:"Golos Text","Segoe UI",Arial,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{background:var(--bg)}
-body{margin:0;font-family:var(--b);font-size:16px;line-height:1.55;color:var(--ink);background:var(--bg);
-  padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-block:18px 56px}
-.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+body{margin:0;font-family:var(--b);font-size:16px;line-height:1.5;color:var(--ink);background:var(--bg);min-height:100vh;
+  padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-block:16px 48px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.brand img{width:48px;height:auto}
-.brand b{font-family:var(--h);font-size:20px;letter-spacing:-.3px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand img{width:44px;height:auto}
+.brand b{font-family:var(--h);font-size:19px;letter-spacing:-.3px;line-height:1}
 .brand b span{color:var(--leaf)}
-.anon{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--leaf-d);background:var(--sprout);border:1px solid #CDE9C5;border-radius:999px;padding:8px 14px}
-.hero{position:relative;border-radius:28px;overflow:hidden;min-height:420px;display:flex;align-items:flex-end;color:#fff;
-  background:#3a4a1c url("field.jpg") center 60%/cover no-repeat;box-shadow:0 30px 60px -36px rgba(40,60,10,.6)}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,25,8,.05) 0%,rgba(10,25,8,.25) 40%,rgba(10,25,8,.78) 100%)}
-.hero .in{position:relative;padding:34px;display:flex;flex-direction:column;gap:14px;max-width:640px}
-.hero h1{font-family:var(--h);font-size:40px;line-height:1.08;margin:0;letter-spacing:-.8px;text-wrap:balance}
+.brand small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.anon{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--leaf-d);background:var(--sprout);border:1px solid #CDE9C5;border-radius:999px;padding:8px 14px;white-space:nowrap}
+/* прогрес-поле */
+.track{position:relative;height:30px;margin:2px 18px 0}
+.track .soil{position:absolute;left:0;right:0;top:20px;height:6px;border-radius:9px;background:repeating-linear-gradient(90deg,#E4D5B7 0 10px,#D9C59F 10px 12px)}
+.track .grown{position:absolute;left:0;top:20px;height:6px;border-radius:9px;background:linear-gradient(90deg,#7CC95A,var(--leaf));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.track img{position:absolute;top:-2px;width:34px;height:auto;transform:translateX(-50%);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.tcount{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:4px}
+/* герой */
+.hero{position:relative;border-radius:28px;overflow:hidden;min-height:430px;display:flex;align-items:flex-end;color:#fff;box-shadow:0 30px 60px -38px rgba(40,60,10,.7);isolation:isolate}
+.hero .ph{position:absolute;inset:0;background:#4b5a24 url("img/hero.jpg") center 55%/cover no-repeat;z-index:-2;animation:kb 18s ease-in-out infinite alternate}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,22,6,0) 20%,rgba(8,22,6,.35) 55%,rgba(8,22,6,.82) 100%)}
+.hero .in{padding:32px;display:flex;flex-direction:column;gap:14px;max-width:600px}
+.hero h1{font-family:var(--h);font-size:38px;line-height:1.08;margin:0;letter-spacing:-.8px;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--wheat)}
-.hero p{margin:0;font-size:17px;color:#EEF4E8;max-width:52ch}
-.meta{display:flex;flex-wrap:wrap;gap:8px}
-.meta span{font-size:13px;font-weight:500;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:999px;padding:6px 12px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:30px;display:flex;flex-direction:column;gap:18px;box-shadow:0 18px 40px -32px rgba(21,33,23,.45)}
-.prog{display:flex;flex-direction:column;gap:8px}
-.bar{height:8px;background:#E6EEE2;border-radius:99px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),#8BD35C);border-radius:99px;transition:width .5s ease}
-.pl{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
-.eyebrow{margin:0;font-size:13px;font-weight:600;color:var(--leaf-d);letter-spacing:.2px}
-h2{font-family:var(--h);font-size:24px;margin:0;letter-spacing:-.3px;text-wrap:balance}
-.lead{margin:0;color:var(--muted);max-width:62ch}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.f{display:flex;flex-direction:column;gap:6px;min-width:0}
-.lbl{font-weight:600;font-size:14px}
-input[type=text],select{font:inherit;color:var(--ink);background:#FAFCF8;border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;width:100%}
-input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,.opt:focus-within{outline:3px solid #A4DD93;outline-offset:2px}
-.hint{font-size:13px;color:var(--muted)}
-.err{margin:0;color:var(--bad);font-size:14px;min-height:1.2em}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-button{font:inherit;font-weight:600;border-radius:14px;padding:13px 24px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,background .12s}
-button:hover{transform:translateY(-1px)}
+.hero p{margin:0;font-size:17px;color:#EEF4E8}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-size:13px;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:999px;padding:6px 12px}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1.5%,-1%)}}
+/* картки */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 22px 44px -34px rgba(20,32,23,.5)}
+.card .body{padding:26px 28px 28px;display:flex;flex-direction:column;gap:18px}
+.qimg{position:relative;aspect-ratio:16/7;overflow:hidden;background:#cfd8c4}
+.qimg img{width:100%;height:100%;object-fit:cover;display:block;animation:kb 14s ease-in-out infinite alternate}
+.qimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.45))}
+.qimg .tag{position:absolute;left:18px;bottom:14px;z-index:1;font-size:13px;font-weight:600;color:#fff;background:rgba(15,58,12,.55);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:5px 12px;border-radius:999px}
+.qimg .no{position:absolute;right:18px;bottom:12px;z-index:1;font-family:var(--h);font-size:28px;color:#fff;opacity:.9}
+.qimg .no small{font-size:14px;opacity:.75}
+h2{font-family:var(--h);font-size:23px;line-height:1.25;margin:0;letter-spacing:-.3px;text-wrap:balance}
+.sub{margin:-8px 0 0;color:var(--muted);font-size:14px}
+.lbl{font-weight:600;font-size:14px;color:var(--muted)}
+/* плитки */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tiles.one{grid-template-columns:1fr}
+.tile{position:relative;display:flex;align-items:center;gap:12px;min-height:62px;padding:12px 14px;border:1.5px solid var(--line);border-radius:16px;background:#FBFDF9;cursor:pointer;font:inherit;font-size:15.5px;font-weight:500;color:var(--ink);text-align:left;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+.tile:hover{border-color:#B9DCAD;transform:translateY(-1px)}
+.tile .ic{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--sprout);color:var(--leaf-d);transition:background .15s,color .15s}
+.tile .ic svg{width:22px;height:22px}
+.tile .ck{position:absolute;right:12px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--leaf);color:#fff;display:grid;place-items:center;transform:scale(0);transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.tile[aria-pressed="true"]{border-color:var(--leaf);background:var(--sprout);box-shadow:0 8px 18px -12px rgba(35,160,25,.8)}
+.tile[aria-pressed="true"] .ic{background:var(--leaf);color:#fff}
+.tile[aria-pressed="true"] .ck{transform:scale(1)}
+.tile.pop{animation:pop .35s}
+@keyframes pop{40%{transform:scale(.96)}100%{transform:scale(1)}}
+.tile.chip{min-height:48px;justify-content:center;font-weight:600}
+/* шкала */
+.scale{display:flex;flex-direction:column;gap:12px;padding:6px 2px}
+.bignum{display:flex;align-items:baseline;gap:12px}
+.bignum b{font-family:var(--h);font-size:56px;line-height:1;color:var(--leaf);min-width:1.4ch;transition:transform .15s}
+.bignum span{font-weight:600;font-size:17px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:14px;border-radius:99px;background:linear-gradient(90deg,var(--leaf) var(--p,50%),#E5EDE1 var(--p,50%));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:4px solid var(--leaf);box-shadow:0 4px 12px rgba(0,0,0,.18);cursor:grab}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid var(--leaf);cursor:grab}
+.ends{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+/* матриця */
+.mx{display:flex;flex-direction:column;gap:12px}
+.mrow{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1.5px solid var(--line);border-radius:16px;background:#FBFDF9}
+.mrow .t{font-weight:600;font-size:15px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{font:inherit;font-size:14px;font-weight:600;padding:9px 6px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .15s}
+.seg button[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:#fff}
+/* навігація */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+button.btn{font:inherit;font-weight:600;border-radius:14px;padding:13px 22px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,background .12s,opacity .15s}
+button.btn:hover{transform:translateY(-1px)}
 button.go{background:var(--leaf);border-color:var(--leaf);color:#fff;box-shadow:0 10px 20px -12px rgba(35,160,25,.9)}
 button.go:hover{background:var(--leaf-d)}
-.q{display:flex;flex-direction:column;gap:10px;padding:18px 0;border-top:1px solid #EEF3EA}
-.q:first-of-type{border-top:0;padding-top:2px}
-.qt{font-weight:600;font-size:16.5px}
-.qn{display:inline-grid;place-items:center;min-width:28px;height:28px;border-radius:9px;background:var(--sprout);color:var(--leaf-d);font-size:13px;font-weight:700;margin-right:10px;vertical-align:1px}
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
-.opts.s4{grid-template-columns:repeat(4,1fr)}
-.opts.s5{grid-template-columns:repeat(5,1fr)}
-.opt{position:relative;display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;background:#FCFDFB;font-size:15px;transition:border-color .15s,background .15s}
-.opt:hover{border-color:#BFDDB4}
-.opt input{position:absolute;opacity:0;pointer-events:none}
-.opt .d{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #B9CDB2;margin-top:2px}
-.opt.cb .d{border-radius:5px}
-.opt:has(input:checked){border-color:var(--leaf);background:var(--sprout)}
-.opt:has(input:checked) .d{border-color:var(--leaf);background:radial-gradient(circle,var(--leaf) 45%,transparent 50%)}
-.opt.cb:has(input:checked) .d{background:var(--leaf)}
-.s4 .opt,.s5 .opt{flex-direction:column;align-items:center;text-align:center;font-size:12.5px;padding:11px 6px;gap:6px}
-.s5 .opt b{font-family:var(--h);font-size:17px;color:var(--leaf-d)}
-.res{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
-.ring{width:168px;height:168px;position:relative}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+button:focus-visible,.tile:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #A4DD93;outline-offset:2px}
+.hint{font-size:13px;color:var(--muted)}
+.err{margin:0;color:var(--bad);font-size:14px;min-height:1.2em}
+/* анімація кадрів */
+.enter{animation:enter .45s cubic-bezier(.2,.8,.2,1)}
+.enter-back{animation:enterb .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{opacity:0;transform:translateX(40px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes enterb{from{opacity:0;transform:translateX(-40px) scale(.98)}to{opacity:1;transform:none}}
+/* результат */
+.res{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.ring{width:170px;height:170px;position:relative}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .arc{transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
 .ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
 .ring b{font-family:var(--h);font-size:38px;line-height:1}
 .ring small{color:var(--muted)}
-.lv{display:inline-block;font-weight:700;border-radius:999px;padding:6px 14px;font-size:14px;align-self:flex-start}
-.lv1{background:#FBE5DF;color:#922B17}.lv2{background:var(--wheat-l);color:#7A5808}.lv3{background:var(--sprout);color:var(--leaf-d)}.lv4{background:var(--leaf);color:#fff}
-.bars{display:flex;flex-direction:column;gap:11px}
-.br{display:grid;grid-template-columns:120px 1fr 56px;gap:10px;align-items:center;font-size:14px}
-.tr{height:12px;background:#EEF3EB;border-radius:99px;overflow:hidden}
-.tr i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),#8BD35C);border-radius:99px}
-.num{font-variant-numeric:tabular-nums;text-align:right;font-size:13px;font-weight:600}
+.persona{font-family:var(--h);font-size:22px;line-height:1.2;margin:0}
+.bars{display:flex;flex-direction:column;gap:10px}
+.br{display:grid;grid-template-columns:110px 1fr 46px;gap:10px;align-items:center;font-size:14px}
+.trk{height:12px;background:#EEF3EB;border-radius:99px;overflow:hidden}
+.trk i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--leaf),#8BD35C);border-radius:99px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.num{font-variant-numeric:tabular-nums;text-align:right;font-weight:600;font-size:13px}
 .box{display:flex;gap:12px;align-items:center;background:var(--sprout);border:1px solid #CDE9C5;border-radius:16px;padding:14px 16px}
-.box.w{background:var(--wheat-l);border-color:#F0DFA8}
-.idbox{font-family:var(--h);font-size:20px;letter-spacing:1px;color:var(--leaf-d)}
-.code{font:12px Consolas,monospace;word-break:break-all;background:#FAFCF8;border:1.5px dashed var(--line);border-radius:12px;padding:12px;user-select:all}
+.idbox{font-family:var(--h);font-size:19px;letter-spacing:1px;color:var(--leaf-d)}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+/* результати для дослідника */
 .tbl{overflow-x:auto}
 .tbl table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
 .tbl th,.tbl td{border:1px solid var(--line);padding:8px 10px;text-align:center}
@@ -98,153 +130,197 @@ button.go:hover{background:var(--leaf-d)}
 .tbl th{background:#F5F9F2}
 .verdict{border-left:5px solid var(--leaf);background:var(--sprout);padding:10px 14px;border-radius:0 12px 12px 0}
 .verdict.no{border-color:#C99A1E;background:var(--wheat-l)}
-textarea{font:13px Consolas,monospace;width:100%;min-height:120px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:#FAFCF8}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+input[type=password],select{font:inherit;color:var(--ink);background:#FAFCF8;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
 .chart svg{width:100%;height:auto}
-footer{text-align:center;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px}
-footer a{color:var(--leaf-d)}
-@media (max-width:640px){.hero{min-height:380px;border-radius:22px}.hero .in{padding:22px}.hero h1{font-size:28px}.card{padding:20px;border-radius:20px}.opts.s4,.opts.s5{grid-template-columns:repeat(2,1fr)}.opts.s5 .opt:last-child{grid-column:span 2}.res{grid-template-columns:1fr;justify-items:center}.br{grid-template-columns:96px 1fr 50px}.brand b{font-size:17px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.kpi{background:#FAFCF8;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-family:var(--h);font-size:24px}
+.kpi span{font-size:13px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12.5px}
+@media (max-width:620px){.hero{min-height:400px;border-radius:22px}.hero .in{padding:22px}.hero h1{font-size:28px}.card{border-radius:22px}.card .body{padding:20px}.tiles{grid-template-columns:1fr}.qimg{aspect-ratio:16/9}h2{font-size:20px}.res{grid-template-columns:1fr;justify-items:center;text-align:center}.br{grid-template-columns:96px 1fr 44px;text-align:left}.brand small{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#"><img src="logo.png" alt="Логотип АгроТермінал"><b>Агро<span>Термінал</span></b></a>
+    <a class="brand" href="./"><img src="logo.png" alt="Логотип АгроПульс"><div><b>Агро<span>Пульс</span></b><small>опитувальник для студентів-аграріїв</small></div></a>
     <span class="anon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Анонімно</span>
   </header>
+  <div id="prog" hidden><div class="track"><div class="soil"></div><div class="grown" id="grown"></div><img id="trac" src="logo.png" alt=""></div><div class="tcount"><span id="ptag"></span><span id="pnum"></span></div></div>
   <main id="app"></main>
-  <footer><span>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026</span><span>Фото: Raphael Rychetsky / Unsplash</span></footer>
+  <footer>Опитування для магістерського дослідження, ГНПУ ім. О. Довженка, 2026 · Фото: Unsplash, Pexels</footer>
 </div>
+<canvas id="fx" hidden></canvas>
 <script>
 "use strict";
-/* ===== НАЛАШТУВАННЯ: адреса веб-застосунку Google Apps Script (див. README). Порожньо - студент отримує код. ===== */
+/* ===== НАЛАШТУВАННЯ: адреса веб-застосунку Google Apps Script (див. README) ===== */
 const ENDPOINT = "";
 
-const AREAS=["Знайти в інтернеті інструкцію або відео, як усунути несправність техніки","Надіслати агроному фото, геолокацію і короткий звіт у робочий чат","Скласти просту таблицю для обліку чи розрахунку на телефоні або комп’ютері","Розпізнати шахрайське повідомлення і захистити свій акаунт","Самостійно розібратися з новим застосунком чи меню техніки"];
-const SC=["Ще ні","З підказкою","Сам","Навчу інших"];
-const MOT=[["Уміння працювати з електронікою техніки знадобляться мені на роботі",0],["Мені цікаво, як трактор сам їде рівно по GPS",0],["Я готовий вчитися новим програмам, якщо цього вимагатиме робота",0],["Механізатору достатньо вміти керувати трактором, а цифрові штуки - зайве",1],["Я дбаю, щоб мої паролі ніхто не дізнався",0],["Я хотів би працювати на сучасній техніці з автопілотом",0],["Заняття з комп’ютером чи смартфоном мені подобаються більше за звичайні",0],["У робочих чатах треба писати коротко, ввічливо і по суті",0],["Цифрові технології в господарствах - це далеке майбутнє, мені це не потрібно",1],["Я дивлюся відео чи читаю про нову агротехніку в інтернеті",0]];
-const LIK=["Ні","Скоріше ні","Не знаю","Скоріше так","Так"];
-const KNOW=[
- ["Яку похибку має звичайний GPS у тракторі без поправок і з RTK-поправкою?",["Однакову - близько 2-3 см","Без поправок близько 1-3 м, з RTK - близько 2-3 см","Без поправок 10-20 см, з RTK - близько 1 м","RTK лише економить заряд приймача"],1],
- ["Що дає стандарт ISOBUS?",["Керувати сівалкою чи обприскувачем будь-якого виробника з одного терміналу трактора","Під’єднати телефон до трактора через Bluetooth","Замінити GPS-антену","Автоматично заправляти техніку"],0],
- ["Агроном показує карту NDVI поля. Для чого вона найкорисніша?",["Точно виміряти вологість ґрунту","Знайти ділянки зі слабшими рослинами і внести там добрива диференційовано","Побачити кожен бур’ян окремо","Порахувати, скільки техніки працює в полі"],1],
- ["Що робить функція автоматичного відключення секцій на обприскувачі?",["Вимикає двигун на розворотах","Сама вимикає секції там, де поле вже оброблене або за межею поля","Зменшує тиск у шинах","Перемикає передачі"],1],
- ["Що бачить диспетчер у системі телематики?",["Лише дату останнього ТО","Де техніка, з якою швидкістю працює, скільки витрачає пального - майже в реальному часі","Особисті повідомлення механізатора","Прогноз погоди"],1],
- ["Лист «від дилера техніки» прийшов з адреси support@agro-servis-update.top. Що найбільше насторожує?",["Лист англійською","Адреса не з офіційного домену дилера","У листі є логотип","Лист прийшов увечері"],1],
- ["Навіщо робити резервну копію ліній руху і меж полів з терміналу?",["Щоб термінал працював швидше","Щоб у разі поломки чи заміни терміналу не створювати все заново і зберегти точність","Так вимагає закон","Щоб звільнити місце для музики"],1],
- ["Чим допомагає двофакторна автентифікація, якщо пароль від акаунта вкрали?",["Нічим - пароль усе вирішує","Без коду з твого телефону зловмисник однаково не увійде","Пароль сам зміниться","Акаунт буде видалено"],1]
-];
-const ACT=[
- ["Автопілот веде агрегат, але проходи раптом почали «гуляти» на 20-30 см. Що найімовірніше?",["Погіршилась погода","Зник RTK-сигнал і приймач працює без поправки","Закінчується пальне","Забився повітряний фільтр"],1],
- ["Агроном пише: «сівалка на 8 рядів, міжряддя 70 см». Яку робочу ширину введеш у термінал?",["4,9 м","5,6 м","6,3 м","7,0 м"],1],
- ["Ширина агрегату 6 м, швидкість 10 км/год, 2 години роботи без зупинок. Скільки гектарів обробив?",["6 га","10 га","12 га","20 га"],2],
- ["За зміну оброблено 12 га, витрачено 72 л пального. Яку витрату запишеш у звіт?",["6 л/га","8 л/га","0,17 л/га","84 л/га"],0],
- ["На розворотах щоразу виходить перекриття близько 1 м. Що перевіриш насамперед?",["Тиск у шинах","Введені в термінал ширину і зміщення знаряддя","Рівень оливи","Яскравість екрана"],1],
- ["Термінал обприскувача показує: норма 200 л/га, фактично 160 л/га. Що зробиш?",["Збільшу швидкість","Зупинюся, перевірю фільтри, форсунки і калібрування витратоміра","Працюватиму далі - різниця невелика","Вимкну термінал"],1],
- ["У Viber пише новий номер: «Це агроном, змінив телефон. Надішли код із СМС, що зараз прийде». Як вчиниш?",["Надішлю - це ж агроном","Не надсилатиму, передзвоню агроному на старий відомий номер","Надішлю половину коду","Попрошу фото посвідчення"],1],
- ["Термінал пише «Пам’ять заповнена», а попереду ще поле. Що зробиш?",["Видалю всі дані підряд","Збережу старі поля на флешку чи в хмару і лише потім видалю їх з терміналу","Працюватиму без запису","Перезавантажуватиму термінал, доки не зникне"],1]
-];
-const WORDS=["ЖИТО","ОВЕС","ЛЬОН","ПРОСО","ГРЕЧКА","РІПАК","СОЯ","ЯЧМІНЬ","ПШЕНИЦЯ","СОНЯШНИК","ГОРОХ","КУКУРУДЗА"];
-const STEPS=["","Я і цифра","Ставлення","Знання","Що зробиш?","Наостанок",""];
+const IC={
+ laptop:'<path d="M4 6h16v10H4z"/><path d="M2 19h20"/>',phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+ cal:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+ ok:'<path d="M5 12.5l4.5 4.5L19 7"/>',half:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/>',down:'<path d="M12 4v15M6 13l6 6 6-6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ gps:'<circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/>',drone:'<circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><rect x="9" y="9.5" width="6" height="5" rx="1.5"/><path d="M7 8l2 2M17 8l-2 2M7 16l2-2M17 16l-2-2"/>',
+ tablet:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 21h10M8 9h4M8 13h8"/>',sat:'<path d="M4 20l4-4M13 11l-2 2"/><path d="M14 4l6 6-4 4-6-6z"/><path d="M5 9a4 4 0 0 0 10 10"/>',chart:'<path d="M4 20V4M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/>',
+ star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',coin:'<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.2c-.6-.8-1.5-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-1.9-.4-2.5-1.2M12 6.5v11"/>',
+ seat:'<path d="M7 4v9h9l2 6"/><path d="M7 13l-2 6"/><circle cx="8" cy="4" r="1"/>',spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
+ thumb:'<path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 4h5.5a2 2 0 0 1 2 2.4l-1.3 6A2 2 0 0 1 17.2 20H7"/>',maybe:'<circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 16.5v.5"/>',
+ meh:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 15h7M9 10h.01M15 10h.01"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',shield:'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>',
+ search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/>',doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',video:'<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/>',
+ hands:'<path d="M3 12l4-4 4 3 3-3 3 3 4-4"/><path d="M3 12v6h18v-6"/>',list:'<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',game:'<rect x="2.5" y="7" width="19" height="10" rx="5"/><path d="M7 10v4M5 12h4M15.5 11h.01M18 13h.01"/>',
+ rep:'<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>'
+};
+const svg=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.ok}</svg>`;
 
-const S={step:0,id:"",group:"",stage:"В",self:[],mot:[],know:[],act:[],refl:{},t0:0};
+const Q=[
+ {id:"q1",img:"q1",tag:"Майбутня робота",c:"M",type:"scale",t:"Наскільки цифрові технології знадобляться тобі в майбутній роботі?",lo:"Зовсім не знадобляться",hi:"Без них нікуди",words:["","Зовсім ні","Майже ні","Мало","Трохи","Частково","Помірно","Досить","Сильно","Дуже","Без них нікуди"]},
+ {id:"q2",img:"q2",tag:"Навчання",c:"D",type:"choice",t:"Як часто на заняттях ви працюєте з комп’ютером, смартфоном чи онлайн-сервісами?",o:[["Майже на кожному занятті",9,"laptop"],["Кілька разів на тиждень",6,"cal"],["Зрідка",3,"phone"],["Майже ніколи",0,"moon"]]},
+ {id:"q3",img:"q3",tag:"Навчання",c:null,type:"choice",t:"Чи вистачає тобі сучасних інформаційних технологій у навчанні?",o:[["Так, цілком",3,"ok"],["Загалом так, але хочеться більше",2,"half"],["Замало",1,"down"],["Майже немає",0,"x"]]},
+ {id:"q4",img:"q4",tag:"Цифрове поле",c:"C",type:"multi",t:"Що з цього ти вже бачив наживо або пробував?",s:"Можна обрати кілька",o:[["GPS-автопілот трактора",2,"gps"],["Дрон над полем",2,"drone"],["Бортовий термінал у кабіні",2,"tablet"],["Супутникова карта поля",2,"sat"],["Облік робіт у застосунку",2,"chart"],["Нічого з цього",0,"x",1]]},
+ {id:"q5",img:"q5",tag:"Цифрове поле",c:"C",type:"choice",t:"Як добре ти розумієш, як трактор сам їде рівно по GPS?",o:[["Можу пояснити іншим",15,"star"],["Розумію в загальних рисах",10,"ok"],["Чув, але як працює - не знаю",5,"maybe"],["Вперше про таке чую",0,"x"]]},
+ {id:"q6",img:"q6",tag:"Твої вміння",c:"D",type:"matrix",t:"Наскільки впевнено ти можеш…",rows:["Знайти інструкцію або відео, як усунути несправність","Скласти просту таблицю обліку на телефоні чи комп’ютері","Надіслати агроному фото й короткий звіт у робочий чат","Розпізнати шахрайське повідомлення"],cols:["Ще ні","З допомогою","Легко"],pts:[0,2,4]},
+ {id:"q7",img:"q7",tag:"Агротехніка",c:"M",type:"choice",t:"Що тебе найбільше чіпляє в сучасній агротехніці?",o:[["Точність і економія",5,"coin"],["Комфорт у кабіні",5,"seat"],["Гаджети, екрани, дрони",5,"spark"],["Нічого особливого",0,"meh"]]},
+ {id:"q8",img:"q8",tag:"Агротехніка",c:"M",type:"choice",t:"Хотів би ти працювати на техніці з автопілотом?",o:[["Так, це круто",10,"thumb"],["Можливо, якщо навчать",6,"maybe"],["Мені байдуже",2,"meh"],["Ні",0,"x"]]},
+ {id:"q9",img:"q9",tag:"Самооцінка",c:"R",type:"scale",t:"Як ти сам оцінюєш свої цифрові вміння?",lo:"Слабо",hi:"Дуже впевнено",words:["","Дуже слабо","Слабо","Слабувато","Нижче середнього","Середньо","Трохи вище середнього","Непогано","Добре","Дуже добре","Впевнено, як профі"]},
+ {id:"q10",img:"q10",tag:"Самооцінка",c:"R",type:"multi",t:"Що тобі найбільше варто підтягнути?",s:"Можна обрати кілька",o:[["Знання про електроніку і GPS техніки",1,"gps"],["Таблиці та документи",1,"doc"],["Безпеку в інтернеті",1,"shield"],["Пошук потрібної інформації",1,"search"],["Мені нічого не треба",0,"ok",1]]},
+ {id:"q11",img:"q11",tag:"Як тобі зручніше",c:null,type:"choice",t:"Як тобі найзручніше опановувати щось нове?",o:[["Коротке відео",0,"video"],["Практика з майстром",0,"hands"],["Покрокова інструкція",0,"list"],["Гра чи тренажер",0,"game"]]},
+ {id:"q12",img:"q12",tag:"Саморозвиток",c:"R",type:"choice",t:"Чи вчишся ти чогось цифрового сам - з відео, курсів, застосунків?",o:[["Так, регулярно",10,"rep"],["Іноді",7,"half"],["Рідко",3,"down"],["Ні",0,"x"]]}
+];
+const AGES=["15-16","17","18","19-20","21+"],SEX=["Чоловіча","Жіноча","Не вказувати"];
+const WORDS=["ЖИТО","ОВЕС","ЛЬОН","ПРОСО","ГРЕЧКА","РІПАК","СОЯ","ЯЧМІНЬ","ПШЕНИЦЯ","СОНЯШНИК","ГОРОХ","КУКУРУДЗА"];
+const URLG=(new URLSearchParams(location.search).get("g")||"").slice(0,20);
+
+const S={step:-1,id:"",stage:"В",age:"",sex:"",a:{},t0:0,dir:1};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const f1=x=>(+x).toFixed(1).replace(".",","),f2=x=>(+x).toFixed(2).replace(".",",");
-function save(){try{localStorage.setItem("agro3",JSON.stringify(S))}catch(e){}}
-function load(){try{const r=JSON.parse(localStorage.getItem("agro3")||"null");if(r)Object.assign(S,r)}catch(e){}}
+function save(){try{localStorage.setItem("agropulse",JSON.stringify(S))}catch(e){}}
+function load(){try{const r=JSON.parse(localStorage.getItem("agropulse")||"null");if(r)Object.assign(S,r)}catch(e){}}
 const newId=()=>WORDS[Math.floor(Math.random()*WORDS.length)]+"-"+(100+Math.floor(Math.random()*900));
-function go(n){S.step=n;save();render();scrollTo({top:0,behavior:"smooth"})}
-const radios=(name,opts,cur,cls)=>`<div class="opts ${cls||""}">${opts.map((o,j)=>`<label class="opt"><input type="radio" name="${name}" value="${j}"${cur===j?" checked":""}><span class="d"></span><span>${o}</span></label>`).join("")}</div>`;
-const val=n=>{const r=document.querySelector(`input[name="${n}"]:checked`);return r?+r.value:-1};
-const prog=()=>`<div class="prog"><div class="bar"><i style="width:${(S.step-1)/5*100}%"></i></div><div class="pl"><span>${STEPS[S.step]}</span><span>Крок ${S.step} з 5</span></div></div>`;
-const navb=(nx)=>`<p class="err" id="e"></p><div class="nav"><button id="back">Назад</button><button class="go" id="next">${nx||"Далі"}</button></div>`;
+function go(n){S.dir=n>S.step?1:-1;S.step=n;save();render();scrollTo({top:0,behavior:"smooth"})}
 
-function v0(){return `<section class="hero"><div class="in"><div class="meta"><span>5 хвилин</span><span>без імені й групи</span><span>результат одразу</span></div>
- <h1>Наскільки ти готовий до <em>цифрового</em> поля?</h1><p>Коротке опитування про електроніку техніки, GPS, дрони і безпеку в телефоні. Це не контрольна - відповідай так, як є.</p></div></section>
- <section class="card"><div class="grid2"><div class="f"><label class="lbl" for="st">Проходиш</label><select id="st"><option value="В"${S.stage==="В"?" selected":""}>Вперше</option><option value="П"${S.stage==="П"?" selected":""}>Повторно</option></select></div>
- <div class="f" id="iw"${S.stage==="П"?"":" hidden"}><label class="lbl" for="pid">Твій код з першого разу (якщо зберіг)</label><input type="text" id="pid" placeholder="наприклад, ОВЕС-274"></div></div>
- <p class="err" id="e"></p><div class="nav"><span class="hint">Ми не питаємо ні ім’я, ні групу.</span><button class="go" id="next">Почати опитування</button></div></section>`}
-const URLG=(new URLSearchParams(location.search).get("g")||"").slice(0,20);
-function b0(){$("#st").onchange=e=>{$("#iw").hidden=e.target.value!=="П"};$("#next").onclick=()=>{
- S.group=URLG||"-";S.stage=$("#st").value;const p=($("#pid").value||"").trim().toUpperCase();S.id=S.stage==="П"&&p?p:newId();S.t0=Date.now();S.self=[];S.mot=[];S.know=[];S.act=[];S.refl={};S.sent=null;go(1)}}
-function v1(){return `<section class="card">${prog()}<h2>Що з цього ти вже вмієш?</h2><p class="lead">Обери чесно - наприкінці побачиш, чи збіглася самооцінка з відповідями.</p>
- ${AREAS.map((a,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${a}</div>${radios("s"+i,SC,S.self[i]==null?-1:S.self[i]-1,"s4")}</div>`).join("")}${navb()}</section>`}
-function b1(){$("#back").onclick=()=>go(0);$("#next").onclick=()=>{const v=AREAS.map((_,i)=>val("s"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі пункти.";return}S.self=v.map(x=>x+1);go(2)}}
-function v2(){return `<section class="card">${prog()}<h2>Наскільки ти згоден?</h2>
- ${MOT.map((m,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${m[0]}</div><div class="opts s5">${LIK.map((l,j)=>`<label class="opt"><input type="radio" name="m${i}" value="${j}"${S.mot[i]===j+1?" checked":""}><b>${j+1}</b>${l}</label>`).join("")}</div></div>`).join("")}${navb()}</section>`}
-function b2(){$("#back").onclick=()=>go(1);$("#next").onclick=()=>{const v=MOT.map((_,i)=>val("m"+i));if(v.includes(-1)){$("#e").textContent="Відповідай на всі твердження.";return}S.mot=v.map(x=>x+1);go(3)}}
-function qblock(arr,key,title,lead,i0){return `<section class="card">${prog()}<h2>${title}</h2><p class="lead">${lead}</p>${arr.map((q,i)=>`<div class="q"><div class="qt"><span class="qn">${i+1}</span>${q[0]}</div>${radios(key+i,q[1],S[key==="k"?"know":"act"][i]??-1)}</div>`).join("")}${navb()}</section>`}
-function v3(){return qblock(KNOW,"k","Що ти знаєш про цифрове поле?","Обери одну відповідь. Не знаєш - вибери ту, що здається найлогічнішою.")}
-function b3(){$("#back").onclick=()=>go(2);$("#next").onclick=()=>{const v=KNOW.map((_,i)=>val("k"+i));if(v.includes(-1)){$("#e").textContent=`Без відповіді: ${v.filter(x=>x<0).length}.`;return}S.know=v;go(4)}}
-function v4(){return qblock(ACT,"a","Що зробиш у такій ситуації?","Уяви, що ти вже працюєш механізатором у сучасному господарстві. Тут знадобиться трохи порахувати.")}
-function b4(){$("#back").onclick=()=>go(3);$("#next").onclick=()=>{const v=ACT.map((_,i)=>val("a"+i));if(v.includes(-1)){$("#e").textContent=`Без відповіді: ${v.filter(x=>x<0).length}.`;return}S.act=v;go(5)}}
-function v5(){return `<section class="card">${prog()}<h2>Наостанок</h2>
- <div class="q"><div class="qt"><span class="qn">1</span>У техніці з’явилася нова система, якої ти не знаєш. Як будеш її опановувати?</div>${radios("r1",["Чекатиму, поки хтось покаже","Почитаю інструкцію, подивлюся відео виробника, спробую і спитаю, якщо не вийде","Не буду - мені й так нормально","Натискатиму все підряд"],-1)}</div>
- <div class="q"><div class="qt"><span class="qn">2</span>Що тобі варто підтягнути? (можна кілька)</div><div class="opts">${["Знання про електроніку і GPS техніки","Уміння діяти в робочих ситуаціях: налаштування, розрахунки, звіти","Безпеку в інтернеті","Бажання вчитися новому"].map((o,j)=>`<label class="opt cb"><input type="checkbox" name="r2" value="${j}"><span class="d"></span><span>${o}</span></label>`).join("")}</div></div>
- ${navb("Показати результат")}</section>`}
-function b5(){$("#back").onclick=()=>go(4);$("#next").onclick=()=>{const a=val("r1"),p=$$("input[name=r2]:checked").map(x=>+x.value);if(a<0||!p.length){$("#e").textContent="Відповідай на обидва запитання.";return}S.refl={a,p};S.done=Date.now();S.sent=null;go(6)}}
+/* ---- старт ---- */
+function vStart(){return `<section class="hero"><div class="ph"></div><div class="in"><div class="chips"><span>12 запитань</span><span>3 хвилини</span><span>без імені</span></div>
+ <h1>Як <em>цифра</em> змінює поле - і що думаєш ти?</h1><p>Коротке опитування про цифрові технології в навчанні й майбутній роботі. Тут немає правильних чи неправильних відповідей.</p></div></section>
+ <section class="card"><div class="body">
+  <div class="f"><span class="lbl">Твій вік</span><div class="tiles" style="grid-template-columns:repeat(5,1fr)">${AGES.map(a=>`<button class="tile chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join("")}</div></div>
+  <div class="f"><span class="lbl">Стать</span><div class="tiles" style="grid-template-columns:repeat(3,1fr)">${SEX.map(a=>`<button class="tile chip" data-sex="${a}" aria-pressed="${S.sex===a}">${a}</button>`).join("")}</div></div>
+  <label class="hint" style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="rep"${S.stage==="П"?" checked":""}> Я вже проходив це опитування раніше</label>
+  <div class="f" id="iw"${S.stage==="П"?"":" hidden"}><span class="lbl">Твій код з минулого разу (якщо зберіг)</span><input type="text" id="pid" placeholder="наприклад, ОВЕС-274" style="font:inherit;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#FAFCF8"></div>
+  <p class="err" id="e"></p><div class="nav"><span class="hint">Ми не питаємо ім’я. Відповіді анонімні.</span><button class="btn go" id="next">Почати</button></div></div></section>`}
+function bStart(){
+ $$("[data-age]").forEach(b=>b.onclick=()=>{S.age=b.dataset.age;$$("[data-age]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
+ $$("[data-sex]").forEach(b=>b.onclick=()=>{S.sex=b.dataset.sex;$$("[data-sex]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop")});
+ $("#rep").onchange=e=>{$("#iw").hidden=!e.target.checked};
+ $("#next").onclick=()=>{if(!S.age||!S.sex){$("#e").textContent="Обери вік і стать - це займе секунду.";return}
+  S.stage=$("#rep").checked?"П":"В";const p=($("#pid").value||"").trim().toUpperCase();S.id=S.stage==="П"&&p?p:newId();S.t0=Date.now();S.a={};S.sent=null;go(0)}}
 
-function calc(){
- const m=MOT.reduce((s,q,i)=>s+(q[1]?6-S.mot[i]:S.mot[i]),0),M=(m-10)/40*25;
- const kq=KNOW.map((q,i)=>S.know[i]===q[2]?1:0),aq=ACT.map((q,i)=>S.act[i]===q[2]?1:0);
- const C=kq.reduce((a,b)=>a+b,0)/KNOW.length*25,D=aq.reduce((a,b)=>a+b,0)/ACT.length*25;
- const sn=(S.self.reduce((a,b)=>a+b,0)/5-1)/3,act=(C+D)/50,diff=sn-act,adq=15*Math.max(0,1-Math.abs(diff)/.5);
- const r1=S.refl.a===1?5:0,w=[[0,C],[1,D],[3,M]].sort((x,y)=>x[1]-y[1])[0][0],r2=S.refl.p.includes(w)?5:2;
- const r=x=>Math.round(x*10)/10;return {M:r(M),C:r(C),D:r(D),R:r(adq+r1+r2),T:r(M+C+D+adq+r1+r2),kq,aq,diff:r(diff*100)}}
+/* ---- питання ---- */
+function vQ(i){const q=Q[i],a=S.a[q.id];let ui="";
+ if(q.type==="scale"){const v=a??5;ui=`<div class="scale"><div class="bignum"><b id="sv">${v}</b><span id="sw">${q.words[v]}</span></div><input type="range" id="rg" min="1" max="10" step="1" value="${v}" style="--p:${(v-1)/9*100}%" aria-label="${esc(q.t)}"><div class="ends"><span>${q.lo}</span><span>${q.hi}</span></div></div>`}
+ if(q.type==="choice"||q.type==="multi")ui=`<div class="tiles">${q.o.map((o,j)=>{const on=q.type==="multi"?(a||[]).includes(j):a===j;return `<button class="tile" data-j="${j}" aria-pressed="${on}"><span class="ic">${svg(o[2])}</span><span>${o[0]}</span><span class="ck">${svg("ok")}</span></button>`}).join("")}</div>`;
+ if(q.type==="matrix")ui=`<div class="mx">${q.rows.map((r,ri)=>`<div class="mrow"><div class="t">${r}</div><div class="seg">${q.cols.map((c,ci)=>`<button data-r="${ri}" data-c="${ci}" aria-pressed="${(a||[])[ri]===ci}">${c}</button>`).join("")}</div></div>`).join("")}</div>`;
+ const auto=q.type==="choice";
+ return `<section class="card ${S.dir>0?"enter":"enter-back"}"><div class="qimg"><img src="img/${q.img}.jpg" alt=""><span class="tag">${q.tag}</span><span class="no">${i+1}<small>/${Q.length}</small></span></div>
+ <div class="body"><h2>${q.t}</h2>${q.s?`<p class="sub">${q.s}</p>`:""}${ui}<p class="err" id="e"></p>
+ <div class="nav"><button class="btn" id="back">Назад</button><button class="btn go" id="next"${auto&&a==null?" disabled":""}>${i<Q.length-1?"Далі":"Завершити"}</button></div></div></section>`}
+function bQ(i){const q=Q[i];
+ $("#back").onclick=()=>go(i-1);
+ const next=()=>{if(q.type==="multi"&&!(S.a[q.id]||[]).length){$("#e").textContent="Обери хоча б один варіант.";return}
+  if(q.type==="matrix"){const v=S.a[q.id]||[];if(q.rows.some((_,r)=>v[r]==null)){$("#e").textContent="Відповідай у кожному рядку.";return}}
+  if(q.type==="scale"&&S.a[q.id]==null)S.a[q.id]=+$("#rg").value;
+  if(i<Q.length-1)go(i+1);else{S.done=Date.now();go(Q.length)}};
+ $("#next").onclick=next;
+ if(q.type==="scale"){const r=$("#rg");r.oninput=()=>{const v=+r.value;S.a[q.id]=v;$("#sv").textContent=v;$("#sw").textContent=q.words[v];r.style.setProperty("--p",(v-1)/9*100+"%");save()}}
+ if(q.type==="choice")$$(".tile").forEach(b=>b.onclick=()=>{S.a[q.id]=+b.dataset.j;$$(".tile").forEach(x=>x.setAttribute("aria-pressed",x===b));b.classList.add("pop");$("#next").disabled=false;save();setTimeout(()=>{if(S.step===i)next()},420)});
+ if(q.type==="multi")$$(".tile").forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ex=q.o[j][3];let v=S.a[q.id]||[];
+  if(ex)v=v.includes(j)?[]:[j];else{v=v.filter(x=>!q.o[x][3]);v=v.includes(j)?v.filter(x=>x!==j):[...v,j]}
+  S.a[q.id]=v;$$(".tile").forEach(x=>x.setAttribute("aria-pressed",v.includes(+x.dataset.j)));b.classList.add("pop");$("#e").textContent="";save()});
+ if(q.type==="matrix")$$(".seg button").forEach(b=>b.onclick=()=>{const r=+b.dataset.r,c=+b.dataset.c,v=S.a[q.id]||[];v[r]=c;S.a[q.id]=v;$$(`.seg button[data-r="${r}"]`).forEach(x=>x.setAttribute("aria-pressed",x===b));$("#e").textContent="";save()});
+}
+
+/* ---- підрахунок ---- */
+function calc(){const A=S.a,g=id=>Q.find(q=>q.id===id);
+ const pt=(id)=>{const q=g(id),v=A[id];if(q.type==="choice")return q.o[v][1];if(q.type==="multi")return v.reduce((s,j)=>s+q.o[j][1],0);if(q.type==="matrix")return v.reduce((s,c)=>s+q.pts[c],0);return 0};
+ const M=(A.q1-1)/9*10+pt("q7")+pt("q8");
+ const C=Math.min(10,pt("q4"))+pt("q5");
+ const D=pt("q2")+pt("q6");
+ const self=(A.q9-1)/9,act=(C+D)/50,adq=10*Math.max(0,1-Math.abs(self-act)/.5);
+ const need=(A.q10||[]).some(j=>!g("q10").o[j][3])?5:0;
+ const R=adq+need+pt("q12");const r=x=>Math.round(x*10)/10;
+ return {M:r(M),C:r(C),D:r(D),R:r(R),T:r(M+C+D+R),diff:r((self-act)*100)}}
 const LV=t=>t<=40?1:t<=60?2:t<=80?3:4,LVN=["","Низький","Середній","Достатній","Високий"];
-const b64=s=>btoa(unescape(encodeURIComponent(s))),unb64=s=>decodeURIComponent(escape(atob(s)));
-const payload=R=>({v:3,id:S.id,g:S.group,e:S.stage,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,k:R.aq,s:S.self,q:R.kq,mt:S.mot,min:Math.max(1,Math.round((S.done-S.t0)/60000))});
-function v6(){const R=calc(),L=LV(R.T);S.code="ЦК3."+b64(JSON.stringify(payload(R)));save();const C=2*Math.PI*70;
- const row=(n,v)=>`<div class="br"><span>${n}</span><div class="tr"><i style="width:${v/25*100}%"></i></div><span class="num">${f1(v)}/25</span></div>`;
- const tip=R.diff>15?"Ти оцінюєш себе трохи вище, ніж показали відповіді. Перевіряй себе на справжніх завданнях.":R.diff<-15?"Ти знаєш більше, ніж думаєш. Сміливіше берись за складне!":"Твоя самооцінка майже збіглася з відповідями - це корисна навичка.";
- return `<section class="card"><p class="eyebrow">Твій результат</p>
- <div class="res"><div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" stroke="#EEF3EB" stroke-width="14" fill="none"/><circle cx="80" cy="80" r="70" stroke="#23A019" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-R.T/100)}"/></svg><div><b>${f1(R.T)}</b><small>зі 100</small></div></div>
- <div style="display:flex;flex-direction:column;gap:14px"><span class="lv lv${L}">${LVN[L]} рівень</span><div class="bars">${row("Ставлення",R.M)}${row("Знання",R.C)}${row("Дії",R.D)}${row("Самоаналіз",R.R)}</div></div></div>
- <p class="lead">${tip}</p><div id="sb"></div>
- <div class="box"><div><div class="hint">Твій анонімний код - збережи для повторного проходження</div><div class="idbox">${esc(S.id)}</div></div></div>
- <div class="nav"><span class="hint">Дякуємо за відповіді!</span><button id="again">Пройти ще раз</button></div></section>`}
-async function b6(){$("#again").onclick=()=>{S.step=0;save();render()};const sb=$("#sb");
- const manual=t=>{sb.innerHTML=`<div class="box w"><div style="display:flex;flex-direction:column;gap:8px;width:100%"><b>${t}</b><div class="code" id="code">${S.code}</div><div><button id="cp">Копіювати код</button></div></div></div>`;
-  $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(S.code);$("#cp").textContent="Скопійовано"}catch(e){const r=document.createRange();r.selectNodeContents($("#code"));getSelection().removeAllRanges();getSelection().addRange(r);$("#cp").textContent="Виділено - натисни Ctrl+C"}}};
- if(!ENDPOINT){sb.innerHTML="";return}
- if(S.sent===S.code){sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`;return}
- sb.innerHTML=`<div class="box">Зберігаємо відповіді…</div>`;
- try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.code;save();sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`}catch(e){manual("Не вдалося надіслати автоматично. Надішли код викладачу:")}}
+const PERS=["","Агро-новачок","Цифровий практикант","Агротехнік нового покоління","Цифровий агроінженер"];
+const PTXT=["","Цифровий світ агротехніки для тебе ще попереду - і це нормально. Почни з коротких відео про GPS і дрони: це цікавіше, ніж здається.","Основа вже є. Спробуй частіше працювати з таблицями й застосунками на навчанні - і перейдеш на новий рівень.","Ти впевнено почуваєшся з цифровими технологіями. Ще трохи практики з реальною технікою - і будеш тим, до кого звертаються по допомогу.","Ти готовий до цифрового поля вже зараз. Діли досвідом з одногрупниками - це найкращий спосіб рости далі."];
+function payload(R){return {v:4,id:S.id,g:URLG||"-",e:S.stage,age:S.age,sex:S.sex,M:R.M,C:R.C,D:R.D,R:R.R,T:R.T,a:S.a,min:Math.max(1,Math.round((S.done-S.t0)/60000))}}
 
-/* ---- панель викладача ---- */
-function vT(){return `<section class="card"><p class="eyebrow">Закритий розділ</p><h2>Результати опитування</h2>
- <div class="grid2"><div class="f"><label class="lbl" for="key">Пароль</label><input type="password" id="key" autocomplete="current-password" style="font:inherit;background:#FAFCF8;border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;width:100%"></div><div class="f" style="justify-content:flex-end"><button class="go" id="ld">Увійти</button></div></div>
+/* ---- фінал ---- */
+function vEnd(){const R=calc(),L=LV(R.T),C=2*Math.PI*70;S._R=R;
+ const row=(n,v)=>`<div class="br"><span>${n}</span><div class="trk"><i data-w="${v/25*100}"></i></div><span class="num">${f1(v)}</span></div>`;
+ const tip=R.diff>20?"Ти оцінюєш свої вміння трохи вище, ніж показали відповіді. Перевіряй себе на практиці.":R.diff<-20?"Ти вмієш більше, ніж думаєш - сміливіше!":"Твоя самооцінка збігається з відповідями - чудово.";
+ return `<section class="card enter"><div class="body">
+ <div class="res"><div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" stroke="#EEF3EB" stroke-width="14" fill="none"/><circle class="arc" id="arc" cx="80" cy="80" r="70" stroke="#23A019" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-R.T/100)}"/></svg><div><b id="tot">0</b><small>зі 100</small></div></div>
+ <div style="display:flex;flex-direction:column;gap:10px"><p class="hint" style="margin:0">Твій профіль</p><p class="persona">${PERS[L]}</p><p style="margin:0;color:var(--muted)">${PTXT[L]}</p></div></div>
+ <div class="bars">${row("Інтерес",R.M)}${row("Обізнаність",R.C)}${row("Вміння",R.D)}${row("Самоаналіз",R.R)}</div>
+ <p class="hint" style="margin:0">${tip}</p><div id="sb"></div>
+ <div class="box"><div><div class="hint">Твій анонімний код - знадобиться, якщо проходитимеш повторно</div><div class="idbox">${esc(S.id)}</div></div></div>
+ <div class="nav"><span class="hint">Дякуємо, що відповів!</span><button class="btn" id="again">Пройти ще раз</button></div></div></section>`}
+async function bEnd(){$("#again").onclick=()=>{S.step=-1;S.a={};save();render()};
+ requestAnimationFrame(()=>{const a=$("#arc");a.style.strokeDashoffset=a.dataset.off;$$(".trk i").forEach(i=>i.style.width=i.dataset.w+"%");
+  const T=S._R.T,t0=performance.now();const tick=t=>{const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);$("#tot").textContent=f1(T*e);if(k<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)});
+ grains();
+ const sb=$("#sb");if(!ENDPOINT||S.sent===S.id+S.done)return;
+ try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload(calc()))});S.sent=S.id+S.done;save();sb.innerHTML=`<div class="box">✓ Відповіді збережено анонімно</div>`}catch(e){}}
+function grains(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const c=$("#fx");c.hidden=false;const g=c.getContext("2d"),W=c.width=innerWidth*devicePixelRatio,H=c.height=innerHeight*devicePixelRatio;
+ const P=Array.from({length:90},()=>({x:Math.random()*W,y:-Math.random()*H*.6,vy:(2+Math.random()*3)*devicePixelRatio,vx:(Math.random()-.5)*1.5,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.15,s:(5+Math.random()*5)*devicePixelRatio,col:["#F2C14E","#E3A93A","#23A019","#8BD35C"][Math.floor(Math.random()*4)]}));
+ const t0=performance.now();const step=t=>{g.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;g.save();g.translate(p.x,p.y);g.rotate(p.r);g.fillStyle=p.col;g.beginPath();g.ellipse(0,0,p.s*.45,p.s,0,0,7);g.fill();g.restore()});
+  if(t-t0<3200)requestAnimationFrame(step);else{g.clearRect(0,0,W,H);c.hidden=true}};requestAnimationFrame(step)}
+
+/* ---- результати (закритий розділ #results) ---- */
+function vR(){return `<section class="card"><div class="body"><p class="hint" style="margin:0">Закритий розділ</p><h2>Результати опитування</h2>
+ <div class="grid2"><div class="f"><label class="lbl" for="key">Пароль</label><input type="password" id="key" autocomplete="current-password"></div><div class="f" style="justify-content:flex-end"><button class="btn go" id="ld">Увійти</button></div></div>
  <div id="sel" hidden><div class="grid2"><div class="f"><label class="lbl" for="eg">Експериментальна група</label><select id="eg"></select></div><div class="f"><label class="lbl" for="kg">Контрольна група</label><select id="kg"></select></div></div></div>
- <div class="nav"><span class="hint" id="pi">${ENDPOINT?"Введи пароль, щоб побачити відповіді.":"Збереження відповідей ще не налаштовано."}</span><a href="#" style="color:var(--leaf-d)">До опитування</a></div><textarea id="codes" hidden></textarea></section><div id="rep" style="display:flex;flex-direction:column;gap:20px"></div>`}
-let ROWS=[],SRV=[];
-function parse(){const out=[...SRV],seen=new Set(out.map(o=>o.id+o.e));let bad=0;$("#codes").value.split(/\s+/).filter(x=>/^ЦК3\./.test(x)).forEach(l=>{try{const o=JSON.parse(unb64(l.slice(4)));if(seen.has(o.id+o.e))return;seen.add(o.id+o.e);out.push(o)}catch(e){bad++}});
- ROWS=out;const gs=[...new Set(out.map(o=>String(o.g)))].sort();["#eg","#kg"].forEach((s,i)=>{const c=$(s).value;$(s).innerHTML=gs.map(g=>`<option${g===c?" selected":""}>${esc(g)}</option>`).join("");if(!c&&gs[i])$(s).value=gs[i]});
- $("#pi").textContent=out.length?`Відповідей: ${out.length}${bad?`, пошкоджених кодів: ${bad}`:""}. Груп: ${gs.length}.`:"Даних ще немає."}
+ <div class="nav"><span class="hint" id="pi">${ENDPOINT?"Введи пароль, щоб побачити відповіді.":"Збереження відповідей ще не налаштовано."}</span><a href="./" style="color:var(--leaf-d)">До опитування</a></div></div></section><div id="rep" style="display:flex;flex-direction:column;gap:18px"></div>`}
+let ROWS=[];
 function lg(z){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,.1208650973866179e-2,-.5395239384953e-5];let x=z,y=z,t=x+5.5;t-=(x+.5)*Math.log(t);let s=1.000000000190015;for(const k of c)s+=k/++y;return -t+Math.log(2.5066282746310005*s/x)}
 function gp(a,x){if(x<=0)return 0;let s=1/a,t=1/a;for(let n=1;n<300;n++){t*=x/(a+n);s+=t;if(t<s*1e-12)break}return s*Math.exp(-x+a*Math.log(x)-lg(a))}
 function chi(a,b){const na=a.reduce((x,y)=>x+y,0),nb=b.reduce((x,y)=>x+y,0),N=na+nb;let x2=0,df=0,sm=0;for(let i=0;i<a.length;i++){const c=a[i]+b[i];if(!c)continue;df++;const ea=na*c/N,eb=nb*c/N;if(ea<5||eb<5)sm++;x2+=(a[i]-ea)**2/ea+(b[i]-eb)**2/eb}df=Math.max(1,df-1);return{x2,df,p:1-gp(df/2,x2/2),sm}}
 const CR={1:3.84,2:5.99,3:7.81},dist=r=>{const d=[0,0,0,0];r.forEach(x=>d[LV(x.T)-1]++);return d},mean=(r,k)=>r.length?r.reduce((s,x)=>s+x[k],0)/r.length:0,pc=(x,n)=>n?f1(x/n*100):"-";
-function analyze(){parse();const R=$("#rep");if(!ROWS.length){R.innerHTML=`<div class="card"><p class="lead">Даних ще немає.</p></div>`;return}const eg=$("#eg").value,kg=$("#kg").value;let h="",tsv=[];
+function cnt(rows,key){const m={};rows.forEach(r=>{m[r[key]]=(m[r[key]]||0)+1});return m}
+function analyze(){const R=$("#rep");if(!ROWS.length){R.innerHTML=`<div class="card"><div class="body"><p class="hint">Відповідей ще немає.</p></div></div>`;return}
+ const gs=[...new Set(ROWS.map(o=>String(o.g)))].sort();["#eg","#kg"].forEach((s,i)=>{const c=$(s).value;$(s).innerHTML=gs.map(g=>`<option${g===c?" selected":""}>${esc(g)}</option>`).join("");if(!c&&gs[i])$(s).value=gs[i]});
+ const eg=$("#eg").value,kg=$("#kg").value;let h=`<section class="card"><div class="body"><h2>Загалом</h2><div class="kpis"><div class="kpi"><b>${ROWS.length}</b><span>відповідей</span></div><div class="kpi"><b>${f1(mean(ROWS,"T"))}</b><span>середній бал</span></div><div class="kpi"><b>${ROWS.filter(r=>r.e==="П").length}</b><span>повторних</span></div><div class="kpi"><b>${gs.length}</b><span>груп</span></div></div>
+ <div class="tbl"><table><tr><th>Вік</th>${AGES.map(a=>`<th>${a}</th>`).join("")}</tr><tr><td>Осіб</td>${AGES.map(a=>`<td>${cnt(ROWS,"age")[a]||0}</td>`).join("")}</tr></table></div>
+ <div class="tbl"><table><tr><th>Стать</th>${SEX.map(a=>`<th>${a}</th>`).join("")}</tr><tr><td>Осіб</td>${SEX.map(a=>`<td>${cnt(ROWS,"sex")[a]||0}</td>`).join("")}</tr></table></div></div></section>`;
+ const tsv=[];
  ["В","П"].forEach(st=>{const A=ROWS.filter(r=>String(r.g)===eg&&r.e===st),B=ROWS.filter(r=>String(r.g)===kg&&r.e===st);if(!A.length&&!B.length)return;const da=dist(A),db=dist(B),nm=st==="В"?"Перше проходження (констатувальний етап)":"Повторне проходження (контрольний етап)";
-  let t=`<section class="card"><h2>${nm}</h2><div class="tbl"><table><tr><th rowspan="2">Рівень</th><th colspan="2">ЕГ (${esc(eg)}), n = ${A.length}</th><th colspan="2">КГ (${esc(kg)}), n = ${B.length}</th></tr><tr><th>осіб</th><th>%</th><th>осіб</th><th>%</th></tr>`;tsv.push(nm,"Рівень\tЕГ осіб\tЕГ %\tКГ осіб\tКГ %");
+  let t=`<section class="card"><div class="body"><h2>${nm}</h2><div class="tbl"><table><tr><th rowspan="2">Рівень</th><th colspan="2">ЕГ (${esc(eg)}), n = ${A.length}</th><th colspan="2">КГ (${esc(kg)}), n = ${B.length}</th></tr><tr><th>осіб</th><th>%</th><th>осіб</th><th>%</th></tr>`;tsv.push(nm,"Рівень\tЕГ осіб\tЕГ %\tКГ осіб\tКГ %");
   for(let i=3;i>=0;i--){t+=`<tr><td>${LVN[i+1]}</td><td>${da[i]}</td><td>${pc(da[i],A.length)}</td><td>${db[i]}</td><td>${pc(db[i],B.length)}</td></tr>`;tsv.push([LVN[i+1],da[i],pc(da[i],A.length),db[i],pc(db[i],B.length)].join("\t"))}
   t+=`</table></div><div class="tbl"><table><tr><th>Критерій (макс. 25)</th><th>ЕГ</th><th>КГ</th></tr>`;tsv.push("","Критерій\tЕГ\tКГ");
   [["Мотиваційний","M"],["Когнітивний","C"],["Діяльнісний","D"],["Рефлексивний","R"],["Загальний (зі 100)","T"]].forEach(([n,k])=>{t+=`<tr><td>${n}</td><td>${f1(mean(A,k))}</td><td>${f1(mean(B,k))}</td></tr>`;tsv.push([n,f1(mean(A,k)),f1(mean(B,k))].join("\t"))});t+="</table></div>";
   if(A.length&&B.length){const c=chi(da,db),sg=c.x2>CR[c.df];t+=`<div class="verdict${sg?"":" no"}">χ²емп = ${f2(c.x2)}; χ²кр = ${f2(CR[c.df])} (α = 0,05; df = ${c.df}); p = ${c.p<.001?"< 0,001":f2(c.p)}. ${sg?"Відмінності між ЕГ і КГ статистично значущі.":"Статистично значущих відмінностей між ЕГ і КГ немає."}${c.sm?` <span class="hint">У ${c.sm} комірках очікувана частота менша за 5 - висновок орієнтовний.</span>`:""}</div>`;tsv.push("",`χ2емп = ${f2(c.x2)}; χ2кр = ${f2(CR[c.df])}; df = ${c.df}; p = ${f2(c.p)}`)}
-  h+=t+chart(da,db,A.length,B.length)+"</section>";tsv.push("","")});
- const all=ROWS.filter(r=>r.q&&r.k);if(all.length){h+=`<section class="card"><h2>Частка правильних відповідей</h2><div class="tbl"><table><tr><th>Запитання</th><th>Правильно, %</th></tr>${KNOW.map((q,i)=>`<tr><td>З${i+1}. ${q[0]}</td><td>${f1(all.filter(r=>r.q[i]).length/all.length*100)}</td></tr>`).join("")}${ACT.map((q,i)=>`<tr><td>Д${i+1}. ${q[0]}</td><td>${f1(all.filter(r=>r.k[i]).length/all.length*100)}</td></tr>`).join("")}</table></div></section>`}
- h+=`<section class="card"><h2>Усі відповіді (анонімно)</h2><div class="tbl"><table><tr><th>Код</th><th>Група</th><th>Етап</th><th>М</th><th>К</th><th>Д</th><th>Р</th><th>Разом</th><th>Рівень</th></tr>${ROWS.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.g)}</td><td>${r.e}</td><td>${f1(r.M)}</td><td>${f1(r.C)}</td><td>${f1(r.D)}</td><td>${f1(r.R)}</td><td>${f1(r.T)}</td><td>${LVN[LV(r.T)]}</td></tr>`).join("")}</table></div><div class="nav"><span class="hint">Таблиці копіюються у форматі для Excel і Word.</span><button class="go" id="ct">Копіювати таблиці</button></div><textarea id="tsv" hidden></textarea></section>`;
- R.innerHTML=h;$("#tsv").value=tsv.join("\n");$("#ct").onclick=async()=>{try{await navigator.clipboard.writeText($("#tsv").value);$("#ct").textContent="Скопійовано"}catch(e){const t=$("#tsv");t.hidden=false;t.select()}}}
+  h+=t+chart(da,db,A.length,B.length)+"</div></section>";tsv.push("","")});
+ h+=`<section class="card"><div class="body"><h2>Відповіді на запитання</h2>${Q.filter(q=>q.type==="choice").map(q=>{const n=ROWS.length;return `<div class="tbl"><table><tr><th>${esc(q.t)}</th><th>%</th></tr>${q.o.map((o,j)=>`<tr><td>${o[0]}</td><td>${pc(ROWS.filter(r=>r.a&&r.a[q.id]===j).length,n)}</td></tr>`).join("")}</table></div>`}).join("")}</div></section>`;
+ h+=`<section class="card"><div class="body"><h2>Усі відповіді (анонімно)</h2><div class="tbl"><table><tr><th>Код</th><th>Група</th><th>Етап</th><th>Вік</th><th>Стать</th><th>М</th><th>К</th><th>Д</th><th>Р</th><th>Разом</th></tr>${ROWS.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.g)}</td><td>${r.e}</td><td>${esc(r.age)}</td><td>${esc(r.sex)}</td><td>${f1(r.M)}</td><td>${f1(r.C)}</td><td>${f1(r.D)}</td><td>${f1(r.R)}</td><td>${f1(r.T)}</td></tr>`).join("")}</table></div><div class="nav"><span class="hint">Таблиці копіюються у форматі для Excel і Word.</span><button class="btn go" id="ct">Копіювати таблиці</button></div><textarea id="tsv" hidden></textarea></div></section>`;
+ R.innerHTML=h;$("#tsv").value=tsv.join("\n");$("#ct").onclick=async()=>{try{await navigator.clipboard.writeText($("#tsv").value);$("#ct").textContent="Скопійовано"}catch(e){const t=$("#tsv");t.hidden=false;t.select()}};["#eg","#kg"].forEach(x=>$(x).onchange=analyze)}
 function chart(da,db,na,nb){const W=640,H=260,pl=44,pb=40,pt=20,cw=(W-pl-10)/4,pa=da.map(x=>na?x/na*100:0),pq=db.map(x=>nb?x/nb*100:0),mx=Math.max(50,...pa,...pq),y=v=>H-pb-(v/mx)*(H-pb-pt);
- let s=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Розподіл за рівнями, %">`;for(let v=0;v<=mx;v+=10)s+=`<line x1="${pl}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E4ECE0"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="#5D6B60">${v}%</text>`;
- for(let i=0;i<4;i++){const x=pl+i*cw+cw*.17,bw=cw*.3;s+=`<rect x="${x}" y="${y(pa[i])}" width="${bw}" height="${H-pb-y(pa[i])}" rx="4" fill="#23A019"/><rect x="${x+bw+5}" y="${y(pq[i])}" width="${bw}" height="${H-pb-y(pq[i])}" rx="4" fill="#F2C14E"/><text x="${pl+i*cw+cw/2}" y="${H-pb+22}" text-anchor="middle" font-size="12" fill="#152117">${LVN[i+1]}</text>`}
+ let s=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Розподіл за рівнями, %">`;for(let v=0;v<=mx;v+=10)s+=`<line x1="${pl}" x2="${W-10}" y1="${y(v)}" y2="${y(v)}" stroke="#E4ECE0"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="#5C6A5F">${v}%</text>`;
+ for(let i=0;i<4;i++){const x=pl+i*cw+cw*.17,bw=cw*.3;s+=`<rect x="${x}" y="${y(pa[i])}" width="${bw}" height="${H-pb-y(pa[i])}" rx="4" fill="#23A019"/><rect x="${x+bw+5}" y="${y(pq[i])}" width="${bw}" height="${H-pb-y(pq[i])}" rx="4" fill="#F2C14E"/><text x="${pl+i*cw+cw/2}" y="${H-pb+22}" text-anchor="middle" font-size="12" fill="#142017">${LVN[i+1]}</text>`}
  return s+`<rect x="${W-160}" y="4" width="12" height="12" rx="3" fill="#23A019"/><text x="${W-142}" y="14" font-size="12">ЕГ</text><rect x="${W-100}" y="4" width="12" height="12" rx="3" fill="#F2C14E"/><text x="${W-82}" y="14" font-size="12">КГ</text></svg></div>`}
-function bT(){const go2=async()=>{if(!ENDPOINT)return;$("#pi").textContent="Завантаження…";try{const j=await (await fetch(ENDPOINT+"?key="+encodeURIComponent($("#key").value))).json();if(j.error){$("#pi").textContent="Неправильний пароль.";return}SRV=j.rows||[];$("#sel").hidden=false;try{sessionStorage.setItem("ak",$("#key").value)}catch(e){}analyze();["#eg","#kg"].forEach(x=>$(x).onchange=analyze)}catch(e){$("#pi").textContent="Не вдалося завантажити відповіді."}};
+function bR(){const go2=async()=>{if(!ENDPOINT)return;$("#pi").textContent="Завантаження…";try{const j=await (await fetch(ENDPOINT+"?key="+encodeURIComponent($("#key").value))).json();if(j.error){$("#pi").textContent="Неправильний пароль.";return}ROWS=j.rows||[];$("#sel").hidden=false;$("#pi").textContent="Готово.";try{sessionStorage.setItem("ak",$("#key").value)}catch(e){}analyze()}catch(e){$("#pi").textContent="Не вдалося завантажити відповіді."}};
  $("#ld").onclick=go2;$("#key").onkeydown=e=>{if(e.key==="Enter")go2()};try{const k=sessionStorage.getItem("ak");if(k){$("#key").value=k;go2()}}catch(e){}}
-const V=[[v0,b0],[v1,b1],[v2,b2],[v3,b3],[v4,b4],[v5,b5],[v6,b6]];
-function render(){if(location.hash==="#results"){$("#app").innerHTML=vT();bT();return}$("#app").innerHTML=V[S.step][0]();V[S.step][1]()}
-addEventListener("hashchange",render);load();render();
+
+/* ---- рендер ---- */
+function render(){const res=location.hash==="#results";$("#prog").hidden=res||S.step<0||S.step>=Q.length;
+ if(res){$("#app").innerHTML=vR();bR();return}
+ if(S.step<0){$("#app").innerHTML=vStart();bStart();return}
+ if(S.step>=Q.length){$("#app").innerHTML=vEnd();bEnd();return}
+ const k=S.step/(Q.length-1);$("#grown").style.width=(k*100)+"%";$("#trac").style.left=`calc(${k*100}% )`;$("#ptag").textContent=Q[S.step].tag;$("#pnum").textContent=`${S.step+1} з ${Q.length}`;
+ $("#app").innerHTML=vQ(S.step);bQ(S.step)}
+addEventListener("hashchange",render);load();if(S.step>=Q.length)S.step=-1;render();
 </script>
 </body>
 </html>
